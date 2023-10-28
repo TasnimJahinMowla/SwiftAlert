@@ -49,7 +49,8 @@ class EmergencyService(models.Model):
     contact_information = models.CharField(max_length=255)
     availability = models.CharField(max_length=50, default="24/7")
     description = models.TextField(default="Emergency Service")
-    image = models.ImageField(default="No Picture")
+    image = models.ImageField(upload_to='img/%y', default="No Picture")
+    email = email = models.EmailField(max_length=255, default="No email")
 
     def __str__(self):
         return self.service_type

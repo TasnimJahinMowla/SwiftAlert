@@ -1,0 +1,23 @@
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'serproStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="profile-box">
+        <img src="{{ service.image.url }}" class="profile-pic">
+        <h3>{{ service.service_type }}</h3>
+        <p>{{ service.description }}</p>
+        <div class="socialIcons">
+            <a href="https://www.facebook.com/UAPBDDhaka/"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.linkedin.com/company/uapbd/"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCs_tflvCGMhbWT5FqhXXfig"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        
+            <a href="mailto:{{ service.email }}"><button type="button">Send Email</button></a>
+    </div>
+</div>
+{% endblock %}
+
+

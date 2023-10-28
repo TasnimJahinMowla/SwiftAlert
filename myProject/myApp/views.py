@@ -1,6 +1,6 @@
 from django.db import IntegrityError   # Add this import for IntegrityError
 from django.contrib import messages
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -88,6 +88,11 @@ def notification(request):
 def home(request):
     context={}
     return render(request, "myApp/home.html")
+
+def serviceprofile(request, service_id):
+    service = get_object_or_404(EmergencyService, pk=service_id)
+    context = {'service': service}
+    return render(request, "myApp/serviceprofile.html", context)
 
 
 def emergency(request):

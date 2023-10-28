@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from .views import *
@@ -18,5 +20,10 @@ urlpatterns = [
     path("emergency/", views.emergency, name="emergency"),
     path("report/", views.report, name="report"),
     path("", views.register, name="register"),
+    path("emergency/<int:service_id>/", views.serviceprofile, name="serviceprofile"),
     path('mark_notification_as_read/', views.mark_notification_as_read, name='mark_notification_as_read'),
 ]
+
+# Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
