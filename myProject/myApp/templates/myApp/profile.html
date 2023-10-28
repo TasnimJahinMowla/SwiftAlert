@@ -1,0 +1,9 @@
+{% extends 'navigation_bar.html' %}
+
+{% block content %}
+  <h1>User Profile</h1>
+  <p>Username: {{ user.username }}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>Bio: {{ user_profile.bio }}</p>
+  <!-- Add more fields as needed -->
+{% endblock %}

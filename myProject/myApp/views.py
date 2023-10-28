@@ -18,6 +18,7 @@ def register(request):
 
         if password != confirmpassword:
             return JsonResponse({'message': 'Passwords do not match', 'alert_type': 'danger'})
+            redirect 
 
         try:
             if User.objects.get(username=username):
@@ -33,7 +34,7 @@ def register(request):
 
         myuser = User.objects.create_user(username, email, password)
         myuser.save()
-        return JsonResponse({'message': 'User is created. Please login', 'alert_type': 'success'})
+        return HttpResponseRedirect('http://127.0.0.1:8000/loginpage/')
 
     context = {}
     return render(request, "myApp/register.html", context)
@@ -79,9 +80,9 @@ def contact(request):
 
 
 def notification(request):
-    context={}
-    return render(request, "myApp/notification.html")
-
+    notifications = Notification.objects.all()  # Retrieve all notifications
+    context = {'notifications': notifications}
+    return render(request, "myApp/notification.html", context)
 
 def home(request):
     context={}
@@ -92,10 +93,6 @@ def emergency(request):
     context={}
     return render(request, "myApp/emergency.html")
 
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from .models import Location, CrimeType, IncidentReport
-from django.contrib.auth.decorators import login_required
 
 def report(request):
     if request.method == 'POST':
@@ -117,6 +114,13 @@ def report(request):
 
         incident = IncidentReport(description=description, timestamp=timestamp, anonymity_status=anonymity_status, location=location, crime_type=crime_type)
         incident.save()
+
+        if crime_type_name in ["Missing Person", "Prisoner Escape"]:
+            # Create a notification for all users
+            users = User.objects.all()
+            for user in users:
+                notification = Notification(crime_type=crime_type, alert_message=f"Incident reported: {description}", timestamp=incident.timestamp)
+                notification.save()
 
         return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
 

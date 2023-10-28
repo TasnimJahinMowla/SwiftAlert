@@ -1,6 +1,14 @@
-# models.py
-
 from django.db import models
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True, null=True)
+    #profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
 
 class Location(models.Model):
     area_code = models.CharField(max_length=10)
@@ -26,3 +34,11 @@ class IncidentReport(models.Model):
     
     def __str__(self):
         return f"Incident: {self.description}"
+
+class Notification(models.Model):
+    crime_type = models.ForeignKey(CrimeType, on_delete=models.CASCADE)
+    alert_message = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.alert_message

@@ -18,4 +18,5 @@ urlpatterns = [
     path("emergency/", views.emergency, name="emergency"),
     path("report/", views.report, name="report"),
     path("", views.register, name="register"),
+    
 ]

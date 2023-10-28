@@ -3,23 +3,35 @@
 {% load static %}
 {% block style %}
 <link rel="stylesheet" href="{% static 'notStyle.css' %}">
+<style>
+    .notificationContainer {
+        max-height: 70vh; /* Set a maximum height */
+        overflow-y: auto; /* Enable vertical scrolling when content exceeds the maximum height */
+    }
+</style>
 {% endblock %}
 {% block content %}
-<div class="notifi-box">
-    <h2>Notification <span>2</span></h2> 
-    <div class="notifi-item">
-        <div class="text">
-            <img src="{% static 'nabil.jpg' %}">
-            <h4>Nabil</h4>
-            <p>Hello</p>
-        </div>
-    </div>   
-    <div class="notifi-item">
-        <div class="text">
-            <img src="{% static 'raha.jpg' %}">
-            <h4>Raha</h4>
-            <p>Hello</p>
-        </div>
-    </div>   
+<div class="container">
+    <div class="notificationContainer">
+        <header>
+          <div class="notificationHeader">
+            <h1>Notification</h1>
+            <span id="num-of-notif"></span>
+          </div>
+          <p id="mark-as-read">Mark as read</p>
+        </header>
+        <main>
+            {% for notification in notifications %}
+            <div class="notificationCard unread">
+                <img src="{% static 'logo.png' %}" alt="photo">
+                <div class="description">
+                    <p>{{ notification.alert_message }}</p>
+                    <p id="notif-time">{{ notification.timestamp }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </main>
+    </div>
 </div>
+<script src="{% static 'script.js' %}"></script>
 {% endblock %}
