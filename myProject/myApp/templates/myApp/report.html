@@ -11,8 +11,21 @@
             {% csrf_token %}
             <textarea name="message" rows="5" placeholder="Description" required></textarea>
             <input type="datetime-local" name="Time-Stamp" class="text-box" placeholder="Time-Stamp" required>
-            <input type="text" name="Area Code" class="text-box" placeholder="Area Code" required>
-            <input type="text" name="Crime Type" class="text-box" placeholder="Crime Type" required>
+
+            <!-- Area Code dropdown -->
+            <select name="Area Code" class="text-box" required>
+                {% for location in locations %}
+                    <option value="{{ location.area_code }}">{{ location.area_name }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Crime Type dropdown -->
+            <select name="Crime Type" class="text-box" required>
+                {% for crime_type in crime_types %}
+                    <option value="{{ crime_type.name }}">{{ crime_type.name }}</option>
+                {% endfor %}
+            </select>
+
             <br><label for="Anonymity Status">Anonymity Status</label>
             <input type="checkbox" id="Anonymity Status" name="Anonymity Status" required>
             <input type="submit" name="submit" class="send-btn" value="Send">

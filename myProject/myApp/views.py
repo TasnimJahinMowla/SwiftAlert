@@ -92,6 +92,11 @@ def emergency(request):
     context={}
     return render(request, "myApp/emergency.html")
 
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from .models import Location, CrimeType, IncidentReport
+from django.contrib.auth.decorators import login_required
+
 def report(request):
     if request.method == 'POST':
         description = request.POST.get('message')
@@ -114,4 +119,14 @@ def report(request):
         incident.save()
 
         return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
-    return render(request, "myApp/report.html")
+
+    # Get the available options for the dropdowns
+    locations = Location.objects.all()
+    crime_types = CrimeType.objects.all()
+
+    context = {
+        'locations': locations,
+        'crime_types': crime_types,
+    }
+
+    return render(request, "myApp/report.html", context)
