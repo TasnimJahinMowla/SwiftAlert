@@ -18,5 +18,5 @@ urlpatterns = [
     path("emergency/", views.emergency, name="emergency"),
     path("report/", views.report, name="report"),
     path("", views.register, name="register"),
-    
+    path('mark_notification_as_read/', views.mark_notification_as_read, name='mark_notification_as_read'),
 ]

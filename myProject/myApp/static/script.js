@@ -1,22 +1,25 @@
-const unReadMessages = document.querySelectorAll('.unread');
-const unReadMessagesCount = document.getElementById('num-of-notif');
-const markAll = document.getElementById('mark-as-read');
+document.addEventListener("DOMContentLoaded", function () {
+    const notifications = document.querySelectorAll('.notificationCard');
+    const markAll = document.getElementById('mark-as-read');
 
-unReadMessagesCount.innerText = unReadMessages.length;
-
-unReadMessages.forEach((message) => {
-    message.addEventListener('click', () => {
-        message.classList.remove('unread');
-        const newUnreadMessages = document.querySelectorAll('.unread');
-        unReadMessagesCount.innerText = newUnreadMessages.length;
+    notifications.forEach((notification) => {
+        notification.addEventListener('click', () => {
+            if (notification.classList.contains('unread')) {
+                notification.classList.remove('unread');
+                markNotificationAsRead(notification.getAttribute('data-notification-id'));
+            }
+        });
     });
-});
 
-// Mark as All read part
-markAll.addEventListener('click', () => {
-    unReadMessages.forEach((message) => {
-        message.classList.remove('unread');
+    markAll.addEventListener('click', () => {
+        notifications.forEach((notification) => {
+            notification.classList.remove('unread');
+            markNotificationAsRead(notification.getAttribute('data-notification-id'));
+        });
     });
-    const newUnreadMessages = document.querySelectorAll('.unread');
-    unReadMessagesCount.innerHTML = newUnreadMessages.length;
+
+    function markNotificationAsRead(notificationId) {
+        // You can make an AJAX request to your server to mark the notification as read.
+        // You can use the notificationId to identify and update the notification.
+    }
 });

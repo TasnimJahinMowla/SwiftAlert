@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.http import JsonResponse
 from django import forms
+from django.views.decorators.csrf import csrf_exempt
 
 def register(request):
     if request.method == 'POST':
@@ -134,3 +135,19 @@ def report(request):
     }
 
     return render(request, "myApp/report.html", context)
+
+
+
+
+
+def mark_notification_as_read(request):
+    if request.method == 'POST':
+        notification_id = request.POST.get('notificationId')
+        try:
+            notification = Notification.objects.get(pk=notification_id)
+            notification.is_read = True
+            notification.save()
+            return JsonResponse({'status': 'success'})
+        except Notification.DoesNotExist:
+            return JsonResponse({'status': 'error'})
+

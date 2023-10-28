@@ -1,4 +1,3 @@
-
 {% extends 'navigation_bar.html' %}
 {% load static %}
 {% block style %}
@@ -14,15 +13,15 @@
 <div class="container">
     <div class="notificationContainer">
         <header>
-          <div class="notificationHeader">
-            <h1>Notification</h1>
-            <span id="num-of-notif"></span>
-          </div>
-          <p id="mark-as-read">Mark as read</p>
+            <div class="notificationHeader">
+                <h1>Notification</h1>
+                <span id="num-of-notif">{{ notifications|length }}</span>
+            </div>
+            <p id="mark-as-read">Mark all as read</p>
         </header>
         <main>
             {% for notification in notifications %}
-            <div class="notificationCard unread">
+            <div class="notificationCard {% if notification.is_read %}read{% else %}unread{% endif %}" data-notification-id="{{ notification.id }}">
                 <img src="{% static 'logo.png' %}" alt="photo">
                 <div class="description">
                     <p>{{ notification.alert_message }}</p>
