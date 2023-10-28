@@ -91,8 +91,9 @@ def home(request):
 
 
 def emergency(request):
-    context={}
-    return render(request, "myApp/emergency.html")
+    emergency_services = EmergencyService.objects.all()
+    context = {'emergency_services': emergency_services}
+    return render(request, "myApp/emergency.html", context)
 
 
 def report(request):
@@ -135,9 +136,6 @@ def report(request):
     }
 
     return render(request, "myApp/report.html", context)
-
-
-
 
 
 def mark_notification_as_read(request):

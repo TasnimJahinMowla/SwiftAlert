@@ -40,23 +40,12 @@
     box-sizing: border-box;
     cursor: pointer;
     margin: 10px 15px;
+    background-image: url(ServiesPic.png);
     background-position: center;
     background-size: cover;
     transition: transform 0.5s;
 }
 
-.card1{
-    background-image: url(police.jpeg);
-}
-.card2{
-    background-image: url(fire.png)
-}
-.card3{
-    background-image: url(dudok.png);
-}
-.card4{
-    background-image: url(missing.jpeg);
-}
 .card:hover{
     transform: translateY(-10px);
 }

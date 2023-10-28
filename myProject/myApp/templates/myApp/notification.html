@@ -24,6 +24,7 @@
             <div class="notificationCard {% if notification.is_read %}read{% else %}unread{% endif %}" data-notification-id="{{ notification.id }}">
                 <img src="{% static 'logo.png' %}" alt="photo">
                 <div class="description">
+                    <p>{{ notification.crime_type }}</p>
                     <p>{{ notification.alert_message }}</p>
                     <p id="notif-time">{{ notification.timestamp }}</p>
                 </div>

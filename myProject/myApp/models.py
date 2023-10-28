@@ -43,3 +43,14 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.alert_message
+
+class EmergencyService(models.Model):
+    service_type = models.CharField(max_length=100)
+    contact_information = models.CharField(max_length=255)
+    availability = models.CharField(max_length=50, default="24/7")
+    description = models.TextField(default="Emergency Service")
+    image = models.ImageField(default="No Picture")
+
+    def __str__(self):
+        return self.service_type
+
