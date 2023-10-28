@@ -1,0 +1,49 @@
+
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'emerStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="hContainer">
+    <div class="row">
+       
+        <div class="col">
+            <a href="#"><div class="card card1">
+                <h5>Police</h5>
+                <p class="service-description">The Bangladesh Police of 
+                    the People's Republic of Bangladesh is the national law
+                    enforcement agency of Bangladesh, operating under
+                    the Ministry of Home Affairs.
+                </p>
+                <h4>999</h4>
+                <p class="availabe">24/7</p>
+            </div></a>
+            <a href=""><div class="card card2">
+                <h5>Fire Service</h5>
+                <p class="service-description">The Bangladesh Fire Service & 
+                    Civil Defence (FSCD) is an emergency service that operates under
+                    the Security Services Division of the Ministry of
+                    Home Affairs in the People's Republic of Bangladesh.
+                </p>
+                <h4>16163</h4>
+                <p class="availabe">24/7</p>
+            </div></a>
+            <a href="#"> <div class="card card3">
+                <h5>Dudok</h5>
+                <p class="service-description">The Anti Corruption Commission 
+                    is the principal government agency against corruption in Bangladesh.
+                </p>
+                <h4>106</h4>
+                <p class="availabe">9 AM - 5 PM</p>
+            </div></a>
+           <a href="#"><div class="card card4">
+                <h5>Missing People</h5>
+            </div></a>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

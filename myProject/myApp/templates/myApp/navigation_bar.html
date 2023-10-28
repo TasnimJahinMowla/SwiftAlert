@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'navStyle.css' %}">
+
+    {% block style %}{% endblock %}
+    
+    <script src="https://kit.fontawesome.com/2cf3d36764.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="logo"></div>
+   <nav>
+    <div class="logo">
+       <img src="{% static 'logo.png'%}" width="250" height="70">
+        <ul>
+            <li><a href="http://127.0.0.1:8000/home/">Home</a></li>
+            <li><a href="http://127.0.0.1:8000/about/">About</a></li>
+            <li><a href="http://127.0.0.1:8000/services/">Services</a></li>
+            <li><a href="http://127.0.0.1:8000/contact/">Contact</a></li>
+            <li><a href="http://127.0.0.1:8000/notification/">Notifications</a></li>
+            {% if not request.user.is_authenticated %}
+            <li><a href="http://127.0.0.1:8000/">Signin</a></li>
+            {% else %}
+            <li><a href="http://127.0.0.1:8000/loginpage/">Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+   </nav>
+   
+    {% block content %}{% endblock %}
+    <footer class="stickyFooter">
+        <div class="footerContainer">
+            <div class="socialIcons">
+            <a href="https://www.facebook.com/UAPBDDhaka/"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.researchgate.net/institution/University-of-Asia-Pacific"><i class="fa-brands fa-researchgate"></i></a>
+            <a href="https://twitter.com/uapbd?lang=en"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/company/uapbd/"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCs_tflvCGMhbWT5FqhXXfig"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+    </div>
+    <div class="footerBottom">
+        <p>Copywrite &copy;2022; Designed by <span class="designer">Tasnim</span></p>
+    </div>
+    </footer>
+  
+</body>
+</html>

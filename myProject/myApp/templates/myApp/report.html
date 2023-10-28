@@ -1,0 +1,22 @@
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'cStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="idk">
+    <div class="contact-form">
+        <h2>Report Incident</h2>
+        <form class="contact" action="" method="post">
+            {% csrf_token %}
+            <textarea name="message" rows="5" placeholder="Description" required></textarea>
+            <input type="datetime-local" name="Time-Stamp" class="text-box" placeholder="Time-Stamp" required>
+            <input type="text" name="Area Code" class="text-box" placeholder="Area Code" required>
+            <input type="text" name="Crime Type" class="text-box" placeholder="Crime Type" required>
+            <br><label for="Anonymity Status">Anonymity Status</label>
+            <input type="checkbox" id="Anonymity Status" name="Anonymity Status" required>
+            <input type="submit" name="submit" class="send-btn" value="Send">
+        </form>
+    </div>
+</div>
+{% endblock %}

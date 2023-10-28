@@ -1,0 +1,25 @@
+
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'notStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="notifi-box">
+    <h2>Notification <span>2</span></h2> 
+    <div class="notifi-item">
+        <div class="text">
+            <img src="{% static 'nabil.jpg' %}">
+            <h4>Nabil</h4>
+            <p>Hello</p>
+        </div>
+    </div>   
+    <div class="notifi-item">
+        <div class="text">
+            <img src="{% static 'raha.jpg' %}">
+            <h4>Raha</h4>
+            <p>Hello</p>
+        </div>
+    </div>   
+</div>
+{% endblock %}

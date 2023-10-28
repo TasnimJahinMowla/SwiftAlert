@@ -1,0 +1,40 @@
+
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'abStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="heading">
+    <h1>About Us</h1>
+    <p>The fundamental idea behind our app revolves around ensuring swift access to
+        emergency services and enhancing community safety through a seamless digital
+        platform</p>
+</div>
+<div class="container">
+    <section class="about">
+        <div class="aboutImage">
+            <img src="{% static 'swiftalert.png' %}">
+        </div>
+        <div class="aboutContent">
+            <h2>Secure World in an App</h2>
+            <p>The fundamental idea behind our app revolves around ensuring swift access to
+                emergency services and enhancing community safety through a seamless digital
+                platform. This can include services such as police, medical assistance, and fire
+                department.
+                Another significant aspect of the app is its feature allowing users to
+                anonymously report incidents of crime they witness in their vicinity. This
+                empowers individuals to contribute to the safety of their community without
+                fear of retaliation.
+                The app goes beyond just reporting incidents. It employs analytical capabilities
+                to process the data received from users' reports.
+                In cases where a user reports a violent crime or a missing person in a particular
+                location, the app becomes a powerful tool for disseminating urgent information.
+                It can send out alerts to all users within that geographical area, notifying them of
+                the situation and urging them to exercise caution.
+                When a violent criminal with a number in the database is spotted in the vicinity,
+                the app informs all nearby users in order to caution them.</p>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'cStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="idk">
+    <!--div class="alert-success">
+        <span>Message Sent! Thank you for contacting us</span>
+    </div>
+    <div class="alert-error">
+        <span>Something went wrong! Please try again.</span>
+    </div-->
+    <div class="contact-section">
+        <div class="contact-info">
+            <div><i class='bx bx-home-alt-2'></i>74/A, Green Road, Farmgate
+                Dhaka-1205, Bangladesh</div>
+            <div><i class='bx bx-envelope' ></i></i>21101069@uap-bd.edu</div>
+            <div><i class='bx bx-phone'></i>01831565994</div>
+            <div><i class='bx bx-time-five' ></i>Sun - Thu 8:00 Am to 5:00 PM</div>
+        </div>
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+            <form class="contact" action="" method="post">
+                <input type="text" name="name" class="text-box" placeholder="Your Name" required>
+                <input type="email" name="email" class="text-box" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                <input type="submit" name="submit" class="send-btn" value="Send">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

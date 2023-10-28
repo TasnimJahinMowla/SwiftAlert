@@ -1,0 +1,74 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+.hContainer{
+    width:100%;
+    height: 100vh;
+    background-image: url(hbg.png);
+    background-position: center;
+    background-size: cover;
+    padding-left: 8%;
+    padding-right: 8%;
+}
+.row{
+    display: flex;
+    height: 88%;
+    align-items: center;
+}
+.colm{
+    flex-basis: 50%;
+}
+.hContainer h1{
+    color: #000;
+    font-size: 100px;
+}
+
+.hContainer p{
+    color: #000;
+    font-size: 11px;
+    line-height: 15px;
+}
+.card{
+    width: 200px;
+    height: 230px;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 10px 15px;
+    background-position: center;
+    background-size: cover;
+    transition: transform 0.5s;
+}
+
+.card1{
+    background-image: url(police.jpeg);
+}
+.card2{
+    background-image: url(fire.png)
+}
+.card3{
+    background-image: url(dudok.png);
+}
+.card4{
+    background-image: url(missing.jpeg);
+}
+.card:hover{
+    transform: translateY(-10px);
+}
+.hContainer h5{
+    color: #000;
+    font-size: 20px;
+    text-shadow: 0 0 5px #999;
+    text-align: center;
+}
+.hContainer h4{
+    color: #000;
+    font-size: 15px;
+    text-shadow: 0 0 5px #999;
+    text-align: center;
+}

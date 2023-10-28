@@ -1,0 +1,42 @@
+
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'sStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="sContainer">
+    <h1>Our Services</h1>
+    <div class="row">
+        <div class="service">
+            <i class='bx bxs-phone-call'></i>
+            <h2>Emergency Services Integration</h2>
+            <p>Users can quickly access emergency
+                services such as police, medical assistance, and fire department through the
+                app.</p>
+        </div>
+        <div class="service">
+            <i class='bx bxs-hide'></i>
+            <h2>Anonymous Incident Reporting</h2>
+            <p>Users can report incidents of crime or
+                suspicious activities they witness in their vicinity anonymously.</p>
+        </div>
+        <div class="service">
+            <i class='bx bxs-location-plus' ></i>
+            <h2>Geographical Alert System</h2>
+            <p>When a user reports a violent crime or a
+                missing person in a specific location, the app triggers a geographical alert
+                system. This system sends out alerts to all users within the affected area,
+                providing them with essential information and urging caution.</p>
+        </div>
+        <div class="service">
+            <i class='bx bxs-bell-ring'></i>
+            <h2>Criminal Database Alerts</h2>
+            <p>The app can cross-reference reported incidents
+                with a database of known criminals. If a violent criminal matching the
+                description is spotted nearby, the app sends an immediate alert to nearby
+                users, advising them to be cautious.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
