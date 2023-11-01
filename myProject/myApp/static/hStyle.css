@@ -42,6 +42,9 @@
     background-position: center;
     background-size: cover;
     transition: transform 0.5s;
+    justify-content: center;
+    text-align: center;
+    
 }
 
 .card1{
@@ -65,16 +68,4 @@
     text-shadow: 0 0 5px #999;
     text-align: center;
     
-}
-.row {
-    display: flex;
-    height: 88%;
-    justify-content: center; /* Horizontally center the content */
-    align-items: center; /* Vertically center the content */
-}
-
-.col {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content vertically within each column */
 }
