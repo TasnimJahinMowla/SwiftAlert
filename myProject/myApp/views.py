@@ -9,6 +9,7 @@ from .forms import *
 from django.http import JsonResponse
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Count, ExpressionWrapper, FloatField 
 
 def register(request):
     if request.method == 'POST':
@@ -100,11 +101,34 @@ def emergency(request):
     context = {'emergency_services': emergency_services}
     return render(request, "myApp/emergency.html", context)
 
+def criminalprofile(request, criminal_id):
+    criminal = get_object_or_404(Criminal, pk=criminal_id)
+    context = {'criminal': criminal}
+    return render(request, "myApp/criminalprofile.html", context)
+
+
+def criminal(request):
+    criminals = Criminal.objects.all()
+    context = {'criminals': criminals}
+    return render(request, "myApp/criminal.html", context)
+
+def update_location_crime_percentage(location):
+    total_reports = IncidentReport.objects.filter(location=location).count()
+
+    if total_reports > 0:
+        # Calculate the crime percentage
+        crime_percentage = (total_reports / IncidentReport.objects.count()) * 100
+
+        # Update the location object with the calculated percentage
+        location.crime_percentage = crime_percentage
+        location.save()
+
 
 def report(request):
     if request.method == 'POST':
+        # Your existing code for creating an incident report
         description = request.POST.get('message')
-        timestamp = request.POST.get('Time-Stamp')  # Ensure this is properly formatted as a datetime.
+        timestamp = request.POST.get('Time-Stamp')
         area_code = request.POST.get('Area Code')
         crime_type_name = request.POST.get('Crime Type')
         anonymity_status = request.POST.get('Anonymity Status') == 'on'
@@ -119,19 +143,25 @@ def report(request):
         except CrimeType.DoesNotExist:
             return JsonResponse({'message': 'Invalid Crime Type', 'alert_type': 'danger'})
 
-        incident = IncidentReport(description=description, timestamp=timestamp, anonymity_status=anonymity_status, location=location, crime_type=crime_type)
+        incident = IncidentReport(
+            description=description,
+            timestamp=timestamp,
+            anonymity_status=anonymity_status,
+            location=location,
+            crime_type=crime_type
+        )
         incident.save()
 
-        if crime_type_name in ["Missing Person", "Prisoner Escape"]:
-            # Create a notification for all users
-            users = User.objects.all()
-            for user in users:
-                notification = Notification(crime_type=crime_type, alert_message=f"Incident reported: {description}", timestamp=incident.timestamp)
-                notification.save()
+        # Calculate and update the crime percentage for the reported location
+        update_location_crime_percentage(location)
+
+        # Update crime percentages for all locations
+        locations = Location.objects.all()
+        for location in locations:
+            update_location_crime_percentage(location)
 
         return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
 
-    # Get the available options for the dropdowns
     locations = Location.objects.all()
     crime_types = CrimeType.objects.all()
 
@@ -141,6 +171,7 @@ def report(request):
     }
 
     return render(request, "myApp/report.html", context)
+
 
 
 def mark_notification_as_read(request):

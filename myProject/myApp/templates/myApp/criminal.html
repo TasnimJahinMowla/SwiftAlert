@@ -1,0 +1,21 @@
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'crStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="hContainer">
+    <div class="row">
+        <div class="col">
+            {% for criminal in criminals %}
+            <a href="{% url 'myApp:criminalprofile' criminal.id %}">
+                    <div class="card card{{ forloop.counter }}">
+                        <h5>{{ criminal.name }}</h5>
+                        <h4>{{ criminal.status }}</h4>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

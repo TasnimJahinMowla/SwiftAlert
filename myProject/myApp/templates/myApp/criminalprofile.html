@@ -1,0 +1,17 @@
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'crproStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="profile-box">
+        <img src="{{ criminal.image.url }}" class="profile-pic">
+        <h3>{{ criminal.name}}</h3>
+        <p>{{ criminal.criminal_history}}</p>
+        <a href="mailto:oic_opscr@police.gov.bd"><button type="button">Sighted</button></a>
+    </div>
+</div>
+{% endblock %}
+
+

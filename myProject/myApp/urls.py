@@ -18,9 +18,11 @@ urlpatterns = [
     path("contact/", views.contact, name="contact"),
     path("notification/", views.notification, name="notification"),
     path("emergency/", views.emergency, name="emergency"),
+    path("emergency/<int:service_id>/", views.serviceprofile, name="serviceprofile"),
     path("report/", views.report, name="report"),
     path("", views.register, name="register"),
-    path("emergency/<int:service_id>/", views.serviceprofile, name="serviceprofile"),
+    path("criminal/", views.criminal, name="criminal"),
+    path("criminal/<int:criminal_id>/", views.criminalprofile, name="criminalprofile"),
     path('mark_notification_as_read/', views.mark_notification_as_read, name='mark_notification_as_read'),
 ]
 

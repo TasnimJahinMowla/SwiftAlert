@@ -13,7 +13,8 @@ class UserProfile(models.Model):
 class Location(models.Model):
     area_code = models.CharField(max_length=10)
     area_name = models.CharField(max_length=100)
-    coordinates = models.CharField(max_length=100)  # You can use a more suitable field type.
+    coordinates = models.CharField(max_length=100)  
+    crime_percentage = models.FloatField(default=0) 
     
     def __str__(self):
         return self.area_name
@@ -55,3 +56,8 @@ class EmergencyService(models.Model):
     def __str__(self):
         return self.service_type
 
+class Criminal(models.Model):
+    name = models.CharField(max_length=100)
+    status = models.CharField(max_length=50)
+    criminal_history = models.TextField()
+    image = models.ImageField(upload_to='img/%y', default="No Picture")
