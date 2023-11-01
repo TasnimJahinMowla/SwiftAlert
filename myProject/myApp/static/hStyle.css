@@ -54,7 +54,7 @@
     background-image: url(criminal.jpeg);
 }
 .card4{
-    background-image: url(missing.jpeg);
+    background-image: url(location.jpeg);
 }
 .card:hover{
     transform: translateY(-10px);
@@ -64,4 +64,17 @@
     font-size: 20px;
     text-shadow: 0 0 5px #999;
     text-align: center;
+    
+}
+.row {
+    display: flex;
+    height: 88%;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content vertically within each column */
 }

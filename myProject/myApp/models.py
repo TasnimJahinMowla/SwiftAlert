@@ -1,28 +1,30 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(blank=True, null=True)
-    #profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    
 
     def __str__(self):
         return self.user.username
 
-
 class Location(models.Model):
     area_code = models.CharField(max_length=10)
     area_name = models.CharField(max_length=100)
-    coordinates = models.CharField(max_length=100)  
-    crime_percentage = models.FloatField(default=0) 
-    
+    coordinates = models.CharField(max_length=100)
+    crime_percentage = models.FloatField(default=0)
+    status = models.CharField(max_length=20, default="Safe")
+
     def __str__(self):
         return self.area_name
 
 class CrimeType(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    
+
     def __str__(self):
         return self.name
 
@@ -32,7 +34,7 @@ class IncidentReport(models.Model):
     anonymity_status = models.BooleanField()
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     crime_type = models.ForeignKey(CrimeType, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return f"Incident: {self.description}"
 

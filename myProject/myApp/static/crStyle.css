@@ -22,12 +22,12 @@
     flex-basis: 50%;
 }
 .hContainer h1{
-    color: #000;
+    color: #fff;
     font-size: 100px;
 }
 
 .hContainer p{
-    color: #000;
+    color: #fff;
     font-size: 11px;
     line-height: 15px;
 }
@@ -40,7 +40,7 @@
     box-sizing: border-box;
     cursor: pointer;
     margin: 10px 15px;
-    background-image: url(ServiesPic.png);
+    background-image: url(criminalpro.jpg);
     background-position: center;
     background-size: cover;
     transition: transform 0.5s;
@@ -50,13 +50,13 @@
     transform: translateY(-10px);
 }
 .hContainer h5{
-    color: #000;
+    color: #fff;
     font-size: 20px;
     text-shadow: 0 0 5px #999;
     text-align: center;
 }
 .hContainer h4{
-    color: #000;
+    color: #fff;
     font-size: 15px;
     text-shadow: 0 0 5px #999;
     text-align: center;

@@ -1,4 +1,4 @@
-from django.db import IntegrityError   # Add this import for IntegrityError
+from django.db import IntegrityError  
 from django.contrib import messages
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -82,13 +82,27 @@ def contact(request):
 
 
 def notification(request):
-    notifications = Notification.objects.all()  # Retrieve all notifications
+    notifications = Notification.objects.all()  
     context = {'notifications': notifications}
     return render(request, "myApp/notification.html", context)
 
 def home(request):
     context={}
     return render(request, "myApp/home.html")
+
+def location(request):
+    locations = Location.objects.all()  
+
+  
+    for location in locations:
+        if location.crime_percentage > 50:
+            location.status = 'Unsafe'
+        else:
+            location.status = 'Safe'
+        location.save()  
+
+    context = {'locations': locations}
+    return render(request, "myApp/location.html", context)
 
 def serviceprofile(request, service_id):
     service = get_object_or_404(EmergencyService, pk=service_id)
@@ -116,17 +130,15 @@ def update_location_crime_percentage(location):
     total_reports = IncidentReport.objects.filter(location=location).count()
 
     if total_reports > 0:
-        # Calculate the crime percentage
+       
         crime_percentage = (total_reports / IncidentReport.objects.count()) * 100
 
-        # Update the location object with the calculated percentage
         location.crime_percentage = crime_percentage
         location.save()
 
 
 def report(request):
     if request.method == 'POST':
-        # Your existing code for creating an incident report
         description = request.POST.get('message')
         timestamp = request.POST.get('Time-Stamp')
         area_code = request.POST.get('Area Code')
@@ -152,10 +164,10 @@ def report(request):
         )
         incident.save()
 
-        # Calculate and update the crime percentage for the reported location
+        
         update_location_crime_percentage(location)
 
-        # Update crime percentages for all locations
+        
         locations = Location.objects.all()
         for location in locations:
             update_location_crime_percentage(location)
@@ -184,4 +196,19 @@ def mark_notification_as_read(request):
             return JsonResponse({'status': 'success'})
         except Notification.DoesNotExist:
             return JsonResponse({'status': 'error'})
+
+def update_location_crime_percentage(location):
+    total_reports = IncidentReport.objects.filter(location=location).count()
+
+    if total_reports > 0:
+        
+        crime_percentage = (total_reports / IncidentReport.objects.count()) * 100
+
+        
+        location.crime_percentage = crime_percentage
+        location.save()
+    else:
+        
+        location.crime_percentage = 0
+        location.save()
 

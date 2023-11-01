@@ -1,0 +1,42 @@
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'loStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <main class="table">
+        <section class="table_header">
+            <h1>Safe Areas</h1>
+        </section>
+        <section class="table_body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Area Code </th>
+                        <th> Area Name </th>
+                        <th> Coordinates </th>
+                        <th> Crime Percentage </th>
+                        <th> Status </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for location in locations %}
+                        <tr>
+                            <td>{{ location.area_code }}</td>
+                            <td>{{ location.area_name }}</td>
+                            <td>{{ location.coordinates }}</td>
+                            <td>{{ location.crime_percentage }}</td>
+                            <td>
+                                <p class="status {% if location.status == 'Safe' %}safe{% else %}unsafe{% endif %}">
+                                    {{ location.status|lower }}
+                                </p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+{% endblock %}
