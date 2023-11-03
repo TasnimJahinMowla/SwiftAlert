@@ -126,3 +126,5 @@ MESSAGE_TAGS ={
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR.child('media') 
+
+LOGIN_URL = '/loginpage/'

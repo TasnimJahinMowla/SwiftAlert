@@ -54,7 +54,6 @@ def loginpage(request):
         myuser=authenticate(username=username, password=password)
         if myuser is not None:
             login(request, myuser)
-            messages.success (request, "Login Successful")
             return redirect('http://127.0.0.1:8000/home/')
         else:
             messages.error(request, "Invalid Credentials")
@@ -62,7 +61,7 @@ def loginpage(request):
     context={}
     return render(request, "myApp/loginpage.html",context)
     
-
+@login_required
 def userprofile(request):
     user = request.user
 
@@ -98,27 +97,27 @@ def userprofile(request):
     }
     return render(request, "myApp/userprofile.html", context)
 
-
+@login_required
 def navigation_bar(request):
     context={}
     return render(request, "myApp/navigation_bar.html")
     
-
+@login_required
 def about(request):
     context={}
     return render(request, "myApp/about.html")
 
-
+@login_required
 def services(request):
     context={}
     return render(request, "myApp/services.html")
 
-
+@login_required
 def contact(request):
     context={}
     return render(request, "myApp/contact.html")
 
-
+@login_required
 def notification(request):
     user = request.user
     user_profile = user.userprofile  # Assuming you have a user profile associated with each user
@@ -129,10 +128,12 @@ def notification(request):
     context = {'notifications': notifications}
     return render(request, "myApp/notification.html", context)
 
+@login_required
 def home(request):
     context={}
     return render(request, "myApp/home.html")
 
+@login_required
 def location(request):
     locations = Location.objects.all()  
 
@@ -147,41 +148,31 @@ def location(request):
     context = {'locations': locations}
     return render(request, "myApp/location.html", context)
 
+@login_required
 def serviceprofile(request, service_id):
     service = get_object_or_404(EmergencyService, pk=service_id)
     context = {'service': service}
     return render(request, "myApp/serviceprofile.html", context)
 
-
+@login_required
 def emergency(request):
     emergency_services = EmergencyService.objects.all()
     context = {'emergency_services': emergency_services}
     return render(request, "myApp/emergency.html", context)
 
+@login_required
 def criminalprofile(request, criminal_id):
     criminal = get_object_or_404(Criminal, pk=criminal_id)
     context = {'criminal': criminal}
     return render(request, "myApp/criminalprofile.html", context)
 
-
+@login_required
 def criminal(request):
     criminals = Criminal.objects.all()
     context = {'criminals': criminals}
     return render(request, "myApp/criminal.html", context)
 
-
-def update_location_crime_percentage(location):
-    total_reports = IncidentReport.objects.filter(location=location).count()
-
-    if total_reports > 0:
-       
-        crime_percentage = (total_reports / IncidentReport.objects.count()) * 100
-
-        location.crime_percentage = crime_percentage
-        location.save()
-
-
-
+@login_required
 def report(request):
     if request.method == 'POST':
         description = request.POST.get('message')
@@ -252,7 +243,7 @@ def report(request):
     return render(request, "myApp/report.html", context)
 
 
-
+@login_required
 def update_location_crime_percentage(location):
     total_reports = IncidentReport.objects.filter(location=location).count()
 

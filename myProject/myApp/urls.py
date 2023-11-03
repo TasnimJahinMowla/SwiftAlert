@@ -5,6 +5,7 @@ from django.urls import path
 from .views import *
 from . import views
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 
 app_name = 'myApp'
 
@@ -25,6 +26,7 @@ urlpatterns = [
     path("criminal/", views.criminal, name="criminal"),
     path("criminal/<int:criminal_id>/", views.criminalprofile, name="criminalprofile"),
     path("userprofile/", views.userprofile, name="userprofile"),
+    path('logout/', LogoutView.as_view(next_page='http://127.0.0.1:8000/loginpage/'), name='logout'),
 ]
 
 # Serve media files during development
