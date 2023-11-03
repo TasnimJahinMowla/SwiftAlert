@@ -1,11 +1,15 @@
 {% extends 'navigation_bar.html' %}
 {% load static %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'cStyle.css' %}">
+
+
+<link rel="stylesheet" href="{% static 'repStyle.css' %}">
+
 {% endblock %}
 {% block content %}
 <div class="idk">
     <div class="contact-form">
+
         <h2>Report Incident</h2>
         <form class="contact" action="" method="post">
             {% csrf_token %}
@@ -15,14 +19,14 @@
             <!-- Area Code dropdown -->
             <select name="Area Code" class="text-box" required>
                 {% for location in locations %}
-                    <option value="{{ location.area_code }}">{{ location.area_name }}</option>
+                <option value="{{ location.area_code }}">{{ location.area_name }}</option>
                 {% endfor %}
             </select>
 
             <!-- Crime Type dropdown -->
             <select name="Crime Type" class="text-box" required>
                 {% for crime_type in crime_types %}
-                    <option value="{{ crime_type.name }}">{{ crime_type.name }}</option>
+                <option value="{{ crime_type.name }}">{{ crime_type.name }}</option>
                 {% endfor %}
             </select>
 
@@ -32,4 +36,5 @@
         </form>
     </div>
 </div>
+
 {% endblock %}

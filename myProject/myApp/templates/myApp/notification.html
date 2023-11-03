@@ -15,9 +15,7 @@
         <header>
             <div class="notificationHeader">
                 <h1>Notification</h1>
-                <span id="num-of-notif">{{ notifications|length }}</span>
             </div>
-            <p id="mark-as-read">Mark all as read</p>
         </header>
         <main>
             {% for notification in notifications %}
@@ -26,13 +24,12 @@
                 <div class="description">
                     <p>Crime Type: {{ notification.incident_report.crime_type }}</p>
                     <p>Alert Message: {{ notification.alert_message }}</p>
-                    <p>Timestamp: {{ notification.timestamp }}</p>
-                    <p>Crime Description: {{ notification.incident_report.description }}</p>
+                    <p>Timestamp: {{ notification.incident_report.timestamp }}</p>
                 </div>
             </div>
             {% endfor %}
         </main>
     </div>
 </div>
-<script src="{% static 'script.js' %}"></script>
+
 {% endblock %}

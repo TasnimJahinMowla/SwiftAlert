@@ -11,6 +11,9 @@ class Location(models.Model):
     coordinates = models.CharField(max_length=100)
     crime_percentage = models.FloatField(default=0)
     status = models.CharField(max_length=20, default="Safe")
+    def delete(self, *args, **kwargs):
+        super(Location, self).delete(*args, **kwargs)
+        update_location_crime_percentage()
 
     def __str__(self):
         return self.area_name
@@ -31,16 +34,16 @@ class IncidentReport(models.Model):
     anonymity_status = models.BooleanField()
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     crime_type = models.ForeignKey(CrimeType, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Incident: {self.description}"
+    def delete(self, *args, **kwargs):
+        super(IncidentReport, self).delete(*args, **kwargs)
+        update_location_crime_percentage()
+    
 
 class Notification(models.Model):
-    incident_report = models.ForeignKey(IncidentReport, on_delete=models.CASCADE,default="No Report")
+    incident_report = models.ForeignKey(IncidentReport, on_delete=models.CASCADE,default=1)
     crime_type = models.ForeignKey(CrimeType, on_delete=models.CASCADE)
     alert_message = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return self.alert_message

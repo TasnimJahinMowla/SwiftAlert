@@ -39,6 +39,12 @@ body{
     margin: 10px 0;
     display: inline-block;
 }
+
+.profile-links li a:hover{
+    color: #ff8c69;
+    transition: all 0.4s ease 0s;
+}
+
 .mt-custum{
     margin-top: 100px;
 }
@@ -100,7 +106,10 @@ body{
     transition: 0.3s;
     transition-property: background;
 }
-.contact-form .send-btn:hover{
-    background: #093624;
-
+.contact-form .send-btn:hover {
+    background: #ff8c69; /* Change to a different color */
+    color: #fff;
+    transition: 0.3s;
+    transition-property: background;
 }
+

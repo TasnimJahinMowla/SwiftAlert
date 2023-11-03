@@ -24,6 +24,7 @@
             <li><a href="http://127.0.0.1:8000/services/">Services</a></li>
             <li><a href="http://127.0.0.1:8000/contact/">Contact</a></li>
             <li><a href="http://127.0.0.1:8000/notification/">Notifications</a></li>
+            <li><a href="http://127.0.0.1:8000/userprofile/">User Profile</a></li>
             {% if not request.user.is_authenticated %}
             <li><a href="http://127.0.0.1:8000/">Signin</a></li>
             {% else %}
@@ -32,7 +33,7 @@
         </ul>
     </div>
    </nav>
-   
+   {% include 'myApp/messages.html' %}
     {% block content %}{% endblock %}
     <footer class="stickyFooter">
         <div class="footerContainer">
@@ -48,6 +49,12 @@
         <p>Copywrite &copy;2022; Designed by <span class="designer">Tasnim</span></p>
     </div>
     </footer>
-  
+    <script>
+        setTimeout(function(){
+            if ($('#msg').length > 0) {
+                $('[id^="msg-"]').remove();
+            }
+        }, 2000); // 2000 milliseconds (2 seconds)
+    </script>
 </body>
 </html>

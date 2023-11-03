@@ -10,6 +10,9 @@ from django.http import JsonResponse
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Count, ExpressionWrapper, FloatField 
+from django.utils import timezone 
+from dateutil.parser import parse 
+from datetime import datetime
 
 def register(request):
     if request.method == 'POST':
@@ -166,6 +169,7 @@ def criminal(request):
     context = {'criminals': criminals}
     return render(request, "myApp/criminal.html", context)
 
+
 def update_location_crime_percentage(location):
     total_reports = IncidentReport.objects.filter(location=location).count()
 
@@ -182,6 +186,14 @@ def report(request):
     if request.method == 'POST':
         description = request.POST.get('message')
         timestamp = request.POST.get('Time-Stamp')
+
+        # Ensure the timestamp is not in the future
+        current_datetime = timezone.now()
+        report_datetime = timezone.make_aware(timezone.datetime.fromisoformat(timestamp), timezone.get_current_timezone())
+
+        if report_datetime > current_datetime:
+            return JsonResponse({'message': 'Timestamp cannot be in the future', 'alert_type': 'danger'})
+
         area_code = request.POST.get('Area Code')
         crime_type_name = request.POST.get('Crime Type')
         anonymity_status = request.POST.get('Anonymity Status') == 'on'
@@ -209,7 +221,7 @@ def report(request):
         notification = Notification(
             incident_report=incident,
             crime_type=crime_type,
-            alert_message=description,  # You can use the description as the alert message
+            alert_message=description  # You can use the description as the alert message
         )
         notification.save()
 
@@ -223,19 +235,12 @@ def report(request):
 
         update_location_crime_percentage(location)
 
+        # Update crime percentage for all locations
         locations = Location.objects.all()
         for location in locations:
-            update_location_crime_percentage(location)
-
+            update_location_crime_percentage(location) 
         return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
 
-        locations = Location.objects.all()
-        for location in locations:
-            update_location_crime_percentage(location)
-
-        return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
-
-    
     locations = Location.objects.all()
     crime_types = CrimeType.objects.all()
 
@@ -247,17 +252,6 @@ def report(request):
     return render(request, "myApp/report.html", context)
 
 
-
-def mark_notification_as_read(request):
-    if request.method == 'POST':
-        notification_id = request.POST.get('notificationId')
-        try:
-            notification = Notification.objects.get(pk=notification_id)
-            notification.is_read = True
-            notification.save()
-            return JsonResponse({'status': 'success'})
-        except Notification.DoesNotExist:
-            return JsonResponse({'status': 'error'})
 
 def update_location_crime_percentage(location):
     total_reports = IncidentReport.objects.filter(location=location).count()

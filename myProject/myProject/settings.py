@@ -117,7 +117,11 @@ STATICFILES_DIRS = [BASE_DIR.child("static")]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MESSAGE_TAGS ={
-    messages.ERROR:'danger'
+    messages.DEBUG: 'alert-info',
+    messages. INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages. WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
 
 MEDIA_URL = '/media/'
