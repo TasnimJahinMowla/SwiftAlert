@@ -1,0 +1,106 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+body{
+    min-height: 100vh;
+    background: url(bg.jpg) no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile-links{
+    background-color: #093624;
+    padding:30px 20px;
+    text-align: center;
+    margin: 100px 100px 0 100px;
+    border-radius: 10px;
+}
+
+.profile-links img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-bottom: 25px;
+}
+
+.profile-links li{
+    display: block;
+    margin: 10px 0;
+}
+
+.profile-links li a{
+    color: aliceblue;
+    text-decoration: none;
+    margin: 10px 0;
+    display: inline-block;
+}
+.mt-custum{
+    margin-top: 100px;
+}
+
+.mt-custum .details{
+    border-bottom: 1px solid #472b01;
+    padding: 20px;
+    font-weight: 500;
+}
+
+.contact-form{
+    max-width: 700px;
+    margin-right: 50px;
+}
+.contact-form .text-box{
+    background: #093624;
+    color: #fff;
+    border: none;
+    width: 100%;
+    height: 50px;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+.contact-form .text-box:first-child{
+    margin-right: 15px;
+}
+.contact-form textarea{
+    background: #093624;
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    min-height: 200px;
+    max-height: 400px;
+    resize: vertical;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+.contact-form .send-btn{
+    float: right;
+    background: #093624;
+    color:#fff;
+    border: none;
+    width: 120px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    transition-property: background;
+}
+.contact-form .send-btn:hover{
+    background: #093624;
+
+}

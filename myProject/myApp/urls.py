@@ -25,6 +25,7 @@ urlpatterns = [
     path("criminal/", views.criminal, name="criminal"),
     path("criminal/<int:criminal_id>/", views.criminalprofile, name="criminalprofile"),
     path('mark_notification_as_read/', views.mark_notification_as_read, name='mark_notification_as_read'),
+    path("userprofile/", views.userprofile, name="userprofile"),
 ]
 
 # Serve media files during development

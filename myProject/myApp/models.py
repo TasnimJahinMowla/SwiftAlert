@@ -3,13 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True, null=True)
-    
 
-    def __str__(self):
-        return self.user.username
 
 class Location(models.Model):
     area_code = models.CharField(max_length=10)
@@ -20,6 +14,9 @@ class Location(models.Model):
 
     def __str__(self):
         return self.area_name
+
+
+
 
 class CrimeType(models.Model):
     name = models.CharField(max_length=100)
@@ -39,6 +36,7 @@ class IncidentReport(models.Model):
         return f"Incident: {self.description}"
 
 class Notification(models.Model):
+    incident_report = models.ForeignKey(IncidentReport, on_delete=models.CASCADE,default="No Report")
     crime_type = models.ForeignKey(CrimeType, on_delete=models.CASCADE)
     alert_message = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -46,6 +44,18 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.alert_message
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='img/%Y', default="No Picture")
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
+
+    # Add a many-to-many relationship with notifications
+    notifications = models.ManyToManyField('Notification', related_name='user_profiles', blank=True)
+
+    def __str__(self):
+        return self.user.username
 
 class EmergencyService(models.Model):
     service_type = models.CharField(max_length=100)

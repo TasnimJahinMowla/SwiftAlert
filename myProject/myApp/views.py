@@ -60,6 +60,41 @@ def loginpage(request):
     return render(request, "myApp/loginpage.html",context)
     
 
+def userprofile(request):
+    user = request.user
+
+    try:
+        profile, created = UserProfile.objects.get_or_create(user=user)
+    except UserProfile.DoesNotExist:
+        profile = None
+
+    locations = Location.objects.all()
+
+    if request.method == 'POST':
+        bio = request.POST.get('message')
+        location_id = request.POST.get('location')
+        profile_picture = request.FILES.get('profile_picture')
+
+        if not profile:
+            # If the profile doesn't exist, create a new one
+            new_profile = UserProfile(user=user, bio=bio, location_id=location_id, image=profile_picture)
+            new_profile.save()
+        else:
+            # Update the existing profile
+            profile.bio = bio
+            profile.location_id = location_id
+            if profile_picture:
+                profile.image = profile_picture
+            profile.save()
+
+        return redirect('myApp:userprofile')
+
+    context = {
+        'profile': profile,
+        'locations': locations,
+    }
+    return render(request, "myApp/userprofile.html", context)
+
 
 def navigation_bar(request):
     context={}
@@ -82,7 +117,12 @@ def contact(request):
 
 
 def notification(request):
-    notifications = Notification.objects.all()  
+    user = request.user
+    user_profile = user.userprofile  # Assuming you have a user profile associated with each user
+
+    # Filter notifications for the logged-in user, ordered by timestamp (latest first)
+    notifications = user_profile.notifications.all().order_by('-timestamp')
+
     context = {'notifications': notifications}
     return render(request, "myApp/notification.html", context)
 
@@ -137,6 +177,7 @@ def update_location_crime_percentage(location):
         location.save()
 
 
+
 def report(request):
     if request.method == 'POST':
         description = request.POST.get('message')
@@ -164,16 +205,37 @@ def report(request):
         )
         incident.save()
 
-        
+        # Create a related notification for the incident
+        notification = Notification(
+            incident_report=incident,
+            crime_type=crime_type,
+            alert_message=description,  # You can use the description as the alert message
+        )
+        notification.save()
+
+        # Check if the reported crime type is "Missing Person" or "Prisoner Escape"
+        if crime_type_name == "Missing Person" or crime_type_name == "Prisoner Escape":
+            # Send notifications to all users of the specific location
+            users_to_notify = User.objects.filter(userprofile__location=location)
+            for user in users_to_notify:
+                user_profile = user.userprofile
+                user_profile.notifications.add(notification)
+
         update_location_crime_percentage(location)
 
-        
         locations = Location.objects.all()
         for location in locations:
             update_location_crime_percentage(location)
 
         return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
 
+        locations = Location.objects.all()
+        for location in locations:
+            update_location_crime_percentage(location)
+
+        return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
+
+    
     locations = Location.objects.all()
     crime_types = CrimeType.objects.all()
 
