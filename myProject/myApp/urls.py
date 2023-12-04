@@ -27,6 +27,7 @@ urlpatterns = [
     path("criminal/<int:criminal_id>/", views.criminalprofile, name="criminalprofile"),
     path("userprofile/", views.userprofile, name="userprofile"),
     path('logout/', LogoutView.as_view(next_page='http://127.0.0.1:8000/loginpage/'), name='logout'),
+    path('send_location/', views.send_location, name='send_location'),
 ]
 
 # Serve media files during development

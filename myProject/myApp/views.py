@@ -13,6 +13,11 @@ from django.db.models import Count, ExpressionWrapper, FloatField
 from django.utils import timezone 
 from dateutil.parser import parse 
 from datetime import datetime
+from django.http import JsonResponse
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from geopy.geocoders import Nominatim
 
 def register(request):
     if request.method == 'POST':
@@ -259,3 +264,47 @@ def update_location_crime_percentage(location):
         location.crime_percentage = 0
         location.save()
 
+@csrf_exempt
+def send_location(request):
+    if request.method == 'POST':
+        data = request.POST
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+
+        # Reverse geocoding to get address details
+        location_details = get_location_details(latitude, longitude)
+
+        # Send email with the location details
+        send_email_with_location(location_details)
+
+        return JsonResponse({'message': 'Location sent successfully'})
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+
+def get_location_details(latitude, longitude):
+    geolocator = Nominatim(user_agent="your_app_name")
+    location = geolocator.reverse((latitude, longitude), language='en')
+    
+    address = location.address if location else 'Unknown Address'
+    return address
+
+
+def send_email_with_location(location_details):
+    # Update the email configuration
+    sender_email = 'mahiyatasnim200021@gmail.com'  # Replace with your email
+    sender_password = 'kxze ylnq rjtn vsdj'  # Replace with your App Password
+    receiver_email = '21101069@uap-bd.edu'
+
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = receiver_email
+    message['Subject'] = 'Send Help in This Location'
+
+    body = f'Location Details:\n{location_details}'
+    message.attach(MIMEText(body, 'plain'))
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as server:
+        server.starttls()
+        server.login(sender_email, sender_password)
+        text = message.as_string()
+        server.sendmail(sender_email, receiver_email, text)
