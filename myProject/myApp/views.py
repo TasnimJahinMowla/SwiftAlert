@@ -18,6 +18,10 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from geopy.geocoders import Nominatim
+from django.apps import apps
+from django.forms import modelform_factory
+from .forms import get_dynamic_model_form
+from django.contrib.auth.decorators import user_passes_test
 
 def register(request):
     if request.method == 'POST':
@@ -53,18 +57,33 @@ def register(request):
 
 
 def loginpage(request):
-    if request.method=="POST":
-        username=request.POST.get('username')
-        password=request.POST.get('password')
-        myuser=authenticate(username=username, password=password)
-        if myuser is not None:
-            login(request, myuser)
-            return redirect('http://127.0.0.1:8000/home/')
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Check if "Login as Admin" checkbox is selected
+        login_as_admin = request.POST.get('login_as_admin') == 'on'
+
+        if login_as_admin:
+            # Authenticate as an admin user
+            admin_user = authenticate(username=username, password=password)
+            if admin_user and admin_user.is_staff:
+                login(request, admin_user)
+                return redirect('http://127.0.0.1:8000/admin_panel/')  # Redirect to admin panel
+            else:
+                messages.error(request, "Invalid Admin Credentials")
+                return redirect('http://127.0.0.1:8000/loginpage/')
         else:
-            messages.error(request, "Invalid Credentials")
-            return redirect('http://127.0.0.1:8000/loginpage/')
-    context={}
-    return render(request, "myApp/loginpage.html",context)
+            # Authenticate as a regular user
+            myuser = authenticate(username=username, password=password)
+            if myuser:
+                login(request, myuser)
+                return redirect('http://127.0.0.1:8000/home/')
+            else:
+                messages.error(request, "Invalid Credentials")
+                return redirect('http://127.0.0.1:8000/loginpage/')
+    context = {}
+    return render(request, "myApp/loginpage.html", context)
     
 @login_required
 def userprofile(request):
@@ -101,6 +120,41 @@ def userprofile(request):
         'locations': locations,
     }
     return render(request, "myApp/userprofile.html", context)
+@login_required
+def adminprofile(request):
+    user = request.user
+
+    try:
+        profile, created = UserProfile.objects.get_or_create(user=user)
+    except UserProfile.DoesNotExist:
+        profile = None
+
+    locations = Location.objects.all()
+
+    if request.method == 'POST':
+        bio = request.POST.get('message')
+        location_id = request.POST.get('location')
+        profile_picture = request.FILES.get('profile_picture')
+
+        if not profile:
+            # If the profile doesn't exist, create a new one
+            new_profile = UserProfile(user=user, bio=bio, location_id=location_id, image=profile_picture)
+            new_profile.save()
+        else:
+            # Update the existing profile
+            profile.bio = bio
+            profile.location_id = location_id
+            if profile_picture:
+                profile.image = profile_picture
+            profile.save()
+
+        return redirect('myApp:userprofile')
+
+    context = {
+        'profile': profile,
+        'locations': locations,
+    }
+    return render(request, "myApp/adminprofile.html", context)
 
 @login_required
 def navigation_bar(request):
@@ -137,6 +191,80 @@ def notification(request):
 def home(request):
     context={}
     return render(request, "myApp/home.html")
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='home')  # Redirect to 'home' if not an admin
+def admin_panel(request):
+    models = apps.get_app_config('myApp').get_models()
+    model_names = [model._meta.verbose_name for model in models]
+    context = {'model_names': model_names}
+    return render(request, "myApp/admin_panel.html", context)
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='home')  # Redirect to 'home' if not an admin
+def admin_panel_detail(request, model_name):
+    app_config = apps.get_app_config('myApp')
+    model = app_config.get_model(model_name)
+    instances = model.objects.all()
+
+    context = {
+        'model_name': model_name,
+        'instances': instances,
+    }
+
+    return render(request, "myApp/admin_panel_detail.html", context)
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='home')  # Redirect to 'home' if not an admin
+def admin_panel_detail_instance(request, model_name, instance_id):
+    app_config = apps.get_app_config('myApp')
+    model = app_config.get_model(model_name)
+    instance = get_object_or_404(model, id=instance_id)
+
+    # Generate a ModelForm dynamically
+    ModelForm = modelform_factory(model, exclude=['id'])
+
+    if request.method == 'POST':
+        form = ModelForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(f'/admin_panel/{model_name}/')  # Redirect to the list of instances
+    else:
+        form = ModelForm(instance=instance)
+
+    context = {
+        'model_name': model_name,
+        'instance': instance,
+        'form': form,
+    }
+
+    return render(request, "myApp/admin_panel_detail_instance.html", context)
+
+
+@login_required
+def admin_panel_save_instance(request, model_name, instance_id):
+    app_config = apps.get_app_config('myApp')
+    model = app_config.get_model(model_name)
+    instance = get_object_or_404(model, id=instance_id)
+
+    ModelForm = get_dynamic_model_form(model)
+
+    if request.method == 'POST':
+        form = ModelForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(f'/admin_panel/{model_name}/')  # Redirect to the list of instances
+    else:
+        form = ModelForm(instance=instance)
+
+    context = {
+        'model_name': model_name,
+        'instance': instance,
+        'form': form,
+    }
+
+    return render(request, "myApp/admin_panel_detail_instance.html", context)
 
 @login_required
 def location(request):
@@ -188,7 +316,7 @@ def report(request):
         report_datetime = timezone.make_aware(timezone.datetime.fromisoformat(timestamp), timezone.get_current_timezone())
 
         if report_datetime > current_datetime:
-            return JsonResponse({'message': 'Timestamp cannot be in the future', 'alert_type': 'danger'})
+            return HttpResponse('Timestamp cannot be in the future')
 
         area_code = request.POST.get('Area Code')
         crime_type_name = request.POST.get('Crime Type')
@@ -197,12 +325,13 @@ def report(request):
         try:
             location = Location.objects.get(area_code=area_code)
         except Location.DoesNotExist:
-            return JsonResponse({'message': 'Invalid Area Code', 'alert_type': 'danger'})
+            return HttpResponse('Invalid Area Code')
+
 
         try:
             crime_type = CrimeType.objects.get(name=crime_type_name)
         except CrimeType.DoesNotExist:
-            return JsonResponse({'message': 'Invalid Crime Type', 'alert_type': 'danger'})
+            return HttpResponse('Invalid Crime Type')
 
         incident = IncidentReport(
             description=description,
@@ -235,7 +364,7 @@ def report(request):
         locations = Location.objects.all()
         for location in locations:
             update_location_crime_percentage(location) 
-        return JsonResponse({'message': 'Incident Report saved successfully', 'alert_type': 'success'})
+        return HttpResponse('Incident Report saved successfully')
 
     locations = Location.objects.all()
     crime_types = CrimeType.objects.all()
@@ -248,19 +377,15 @@ def report(request):
     return render(request, "myApp/report.html", context)
 
 
-@login_required
 def update_location_crime_percentage(location):
     total_reports = IncidentReport.objects.filter(location=location).count()
 
     if total_reports > 0:
-        
         crime_percentage = (total_reports / IncidentReport.objects.count()) * 100
 
-        
         location.crime_percentage = crime_percentage
         location.save()
     else:
-        
         location.crime_percentage = 0
         location.save()
 
@@ -271,10 +396,8 @@ def send_location(request):
         latitude = data.get('latitude')
         longitude = data.get('longitude')
 
-        # Reverse geocoding to get address details
         location_details = get_location_details(latitude, longitude)
 
-        # Send email with the location details
         send_email_with_location(location_details)
 
         return JsonResponse({'message': 'Location sent successfully'})
@@ -290,7 +413,6 @@ def get_location_details(latitude, longitude):
 
 
 def send_email_with_location(location_details):
-    # Update the email configuration
     sender_email = 'mahiyatasnim200021@gmail.com'  # Replace with your email
     sender_password = 'kxze ylnq rjtn vsdj'  # Replace with your App Password
     receiver_email = '21101069@uap-bd.edu'

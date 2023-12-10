@@ -1,0 +1,21 @@
+{% extends 'adnav.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hContainer">
+    <div class="row">
+        <div class="col">
+            <h2>{{ model_name }} Instances</h2>
+            <ul>
+                {% for instance in instances %}
+                    <li>
+                        <a href="{% url 'myApp:admin_panel_detail_instance' model_name=model_name instance_id=instance.id %}">
+                            {{ instance }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

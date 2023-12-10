@@ -1,0 +1,21 @@
+{% extends 'adnav.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'adStyle.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="hContainer">
+    <div class="row">
+        <div class="col">
+            <h2>Edit {{ model_name }} Instance</h2>
+            <form method="post" action="{% url 'myApp:admin_panel_save_instance' model_name=model_name instance_id=instance.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

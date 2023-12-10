@@ -36,5 +36,34 @@
         </form>
     </div>
 </div>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $("#reportForm").submit(function(e) {
+        e.preventDefault(); // Prevent the default form submission behavior
+        
+        $.ajax({
+            type: "POST",
+            url: "{% url 'myApp:report' %}",
+            data: $(this).serialize(),
+            success: function(response) {
+                // Display the message in a popup alert
+                alert(response);
+
+                // Optionally, you can clear the form or perform other actions here
+                // $("#reportForm")[0].reset();
+            },
+            error: function(response) {
+                alert("An error occurred while processing your request.");
+            }
+        });
+
+        return false; // Add this line to prevent form submission
+    });
+});
+</script>
+
 
 {% endblock %}

@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SwiftAlert</title>
+    <link rel="stylesheet" href="{% static 'uStyle.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="profile-links">
+                    {% if profile.image %}
+                        <img src="{{ profile.image.url }}" alt="Profile Image">
+                    {% else %}
+                        <img src="{% static 'default_profile_image.png' %}" alt="Default Profile Image">
+                    {% endif %}
+                    <ul>
+                        <li><a href="{% url 'myApp:admin_panel' %}">Admin Panel</a></li>
+                        <li><a href="{% url 'myApp:about' %}">About</a></li>
+                        <li><a href="{% url 'myApp:services' %}">Services</a></li>
+                        <li><a href="{% url 'myApp:contact' %}">Contact</a></li>
+                        <li><a href="{% url 'myApp:loginpage' %}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mt-custum">
+                    <div class="contact-form">
+                        <form class="contact" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="text" name="name" class="text-box" placeholder="Your Name"
+                                value="{{ user.username }}" disabled>
+                            <input type="email" name="email" class="text-box" placeholder="Your Email"
+                                value="{{ user.email }}" disabled>
+                            <select name="location" class="text-box">
+                                <option value="">Select Location</option>
+                                {% for location in locations %}
+                                    <option value="{{ location.id }}"
+                                        {% if profile and location.id == profile.location.id %}selected{% endif %}>
+                                        {{ location.area_name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <textarea name="message" rows="5" placeholder="Your Bio">{{ profile.bio }}</textarea>
+                            <input type="file" name="profile_picture" class="text-box" accept="image/*">
+                            <input type="submit" name="submit" class="send-btn" value="Update">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
