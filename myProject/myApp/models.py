@@ -53,8 +53,6 @@ class UserProfile(models.Model):
     bio = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='img/%Y', default="No Picture")
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
-
-    # Add a many-to-many relationship with notifications
     notifications = models.ManyToManyField('Notification', related_name='user_profiles', blank=True)
 
     def __str__(self):

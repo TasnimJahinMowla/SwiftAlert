@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    margin: 0; /* Reset default margin for the body */
+}
+
+.hContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(hbg.png);
+    background-position: center;
+    background-size: cover;
+    padding: 0 8%;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 400px; /* Set the maximum height for the column */
+    overflow-y: auto; /* Enable vertical scrollbar when content exceeds the height */
+}
+
+.card {
+    width: 200px;
+    height: 130px;
+    flex: 0 0 calc(33.3333% - 30px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 10px 0;
+    background-color: #656d4f;
+    background-position: center;
+    background-size: cover;
+    transition: transform 0.5s;
+    color: white;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.hContainer h5,
+.hContainer h4,
+.hContainer h2,
+a {
+    color: #fff;
+    font-size: 25px; /* Adjust the font size as needed */
+    text-shadow: 0 0 5px #999;
+    text-align: center;
+}
+
+.hContainer h2 {
+    color: #111;
+    font-size: 40px; /* Adjust the font size as needed */
+    text-shadow: 0 0 5px #999;
+    text-align: center;
+}

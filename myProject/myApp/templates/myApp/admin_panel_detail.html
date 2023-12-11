@@ -1,11 +1,15 @@
 {% extends 'adnav.html' %}
 {% load static %}
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'apdStyle.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="hContainer">
     <div class="row">
         <div class="col">
-            <h2>{{ model_name }} Instances</h2>
+            <h2>{{ model_name|capfirst }} Instances</h2><br><br>
             <ul>
                 {% for instance in instances %}
                     <li>

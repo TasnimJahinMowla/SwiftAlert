@@ -1,4 +1,3 @@
-
 {% extends 'adnav.html' %}
 {% load static %}
 
@@ -13,7 +12,7 @@
             {% for model_name in model_names %}
                 {% with model_url=model_name|cut:" " %}
                     <div class="card card{{ forloop.counter }}">
-                        <h5><a href="{% url 'myApp:admin_panel_detail' model_name=model_url %}">{{ model_name }}</a></h5>
+                        <h5><a href="{% url 'myApp:admin_panel_detail' model_name=model_url %}">{{ model_name|capfirst }}</a></h5>
                     </div>
                 {% endwith %}
             {% endfor %}
