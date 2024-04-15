@@ -1,11 +1,9 @@
-
 import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
-from unipath import Path
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -17,7 +15,6 @@ SECRET_KEY = 'django-insecure-c269eb@6bb=#3*ckhe!!a*bky#s#@i$%%+*&(ddh9x0ox+g8oa
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -46,7 +43,7 @@ ROOT_URLCONF = 'myProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/workspaces/SwiftAlert/myProject/myApp/templates/myApp'],
+        'DIRS': [BASE_DIR / 'myApp' / 'templates' / 'myApp'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -61,17 +58,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myProject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR + '/db.sqlite3',  # Use + for concatenation
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -91,7 +86,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -103,28 +97,27 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR.child("static")]
-
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MESSAGE_TAGS ={
+MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
-    messages. INFO: 'alert-info',
+    messages.INFO: 'alert-info',
     messages.SUCCESS: 'alert-success',
-    messages. WARNING: 'alert-warning',
+    messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR.child('media') 
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 LOGIN_URL = '/loginpage/'
