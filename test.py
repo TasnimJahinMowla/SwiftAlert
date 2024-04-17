@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import time
 
 # Initialize Chrome WebDriver
@@ -7,13 +6,13 @@ driver = webdriver.Chrome()
 
 try:
     # Open the registration page
-    driver.get("http://127.0.0.1:8000/register")
+    driver.get("http://127.0.0.1:8000/register/")
 
     # Find the username, email, password, confirm password input fields, and submit button
-    username_field = driver.find_element_by_name("username")
-    email_field = driver.find_element_by_name("email")
-    password_field = driver.find_element_by_name("password")
-    confirm_password_field = driver.find_element_by_name("confirm_password")
+    username_field = driver.find_element_by_id("id_username")
+    email_field = driver.find_element_by_id("id_email")
+    password_field = driver.find_element_by_id("id_password")
+    confirm_password_field = driver.find_element_by_id("id_confirm_password")
     submit_button = driver.find_element_by_xpath("//input[@type='submit']")
 
     # Enter registration details
