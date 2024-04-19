@@ -4,7 +4,7 @@
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
-.container{
+.noti_container{
     display: flex;
     justify-content: center;
     background-color: antiquewhite;
