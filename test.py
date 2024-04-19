@@ -1,38 +1,33 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import time
 
-# Initialize Chrome WebDriver
-driver = webdriver.Chrome()
-
+from selenium import webdriver
+import time
 try:
-    # Open the registration page
-    driver.get("http://127.0.0.1:8000/register/")
 
-    # Find the username, email, password, confirm password input fields, and submit button
-    username_field = driver.find_element_by_id("id_username")
-    email_field = driver.find_element_by_id("id_email")
-    password_field = driver.find_element_by_id("id_password")
-    confirm_password_field = driver.find_element_by_id("id_confirm_password")
-    submit_button = driver.find_element_by_xpath("//input[@type='submit']")
+# Initialize Chrome WebDriver
+    driver = webdriver.Chrome()
+    print("WebDriver initialized.")
 
-    # Enter registration details
-    username_field.send_keys("test_user")
-    email_field.send_keys("test@example.com")
-    password_field.send_keys("test_password")
-    confirm_password_field.send_keys("test_password")
+    # Open the desired URL
+    driver.get("http://127.0.0.1:8000/about/")
+    print("Website has been opened.")
 
-    # Click the submit button
-    submit_button.click()
-
-    # Wait for a few seconds to allow the page to load
+    # Allow some time for the page to load
     time.sleep(3)
 
-    # Check if registration was successful by verifying the redirected URL
-    if "loginpage" in driver.current_url:
-        print("Registration successful! User redirected to login page.")
-    else:
-        print("Registration failed!")
+    # Check if specific elements are present
+    header = driver.find_element(By.TAG_NAME, 'h1')
+    print("Page Title Found: ", header.text)
 
+    # Optionally, check if the text includes expected words
+    assert "About Us" in header.text
+    print("The 'About' page loaded correctly with the right header.")
+
+except Exception as error:
+    print("An error occurred:", str(error))
 finally:
     # Close the browser
     driver.quit()
+    print("Browser closed.")

@@ -1,4 +1,154 @@
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'hStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-6 info_col">
+            <div class="emergency-info">
 
+                <div class="emergency_content">
+                    <h2>Emergency Services</h2>
+                    <p>Our emergency services are available 24/7 to assist you in times of need. Whether it's medical assistance, fire emergencies, or law enforcement support, our dedicated teams are here to help.</p>
+                    <p>Stay calm, stay safe, and remember that help is just a call away.</p>
+
+                </div>
+
+                <div class="statistics">
+                    <div class="statistic">
+                        <h3>Total Support</h3>
+                        <p>100,000+</p>
+                    </div>
+                    <div class="statistic">
+                        <h3>Total Visitors</h3>
+                        <p>500,000+</p>
+                    </div>
+                    <div class="statistic">
+                        <h3>Total Services</h3>
+                        <p>10,000+</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-md-6 col-lg-6 info_col">
+            <div class="content">
+                <div class="card">
+                    <a href="http://127.0.0.1:8000/emergency/">
+                        <img src="{% static 'emer.jpeg' %}" alt="Emergency Services">
+                        <h5>Emergency Services</h5>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="http://127.0.0.1:8000/report/">
+                        <img src="{% static 'rep.jpeg' %}" alt="Report Incident">
+                        <h5>Report Incident</h5>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="http://127.0.0.1:8000/criminal/">
+                        <img src="{% static 'criminal.jpeg' %}" alt="Criminals">
+                        <h5>Criminals</h5>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="http://127.0.0.1:8000/location/">
+                        <img src="{% static 'location.jpeg' %}" alt="Areas">
+                        <h5>Areas</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- hero section start here -->
+<div class="hero">
+
+    <div class="hero_title">
+        <h1>গুরত্বপূর্ন বিষয়াবলি</h1>
+    </div>
+
+    <div class="section-container hero-container-1">
+
+        <div class="col-contant">
+            <h2>ঘরে বসে অনলাইন জিডি করার <br> নিয়ম</h2>
+            <p>তথ্যপ্রযুক্তি খাতে দ্রুত এগিয়ে যাচ্ছে বাংলাদেশ। সব জায়গায় লেগেছে ‘ডিজিটাল’ ছোঁয়া। নতুন শতাব্দীর বিভিন্ন
+                চ্যালেঞ্জের সঙ্গে তাল মিলিয়ে বদলে যাচ্ছে পুলিশের সেবাও।
+                এখন ঘরে বসেই অনলাইনে সাধারণ ডায়েরি (জিডি) করতে পারবেন বাংলাদেশের যেকোনো নাগরিক।
+                কিন্তু অনলাইনে জিডি করবো কীভাবে? এটা কি অনেক জটিল? কত টাকা লাগবে?
+                আজকের স্টার এক্সপ্লেইন্সে ঘরে বসে অনলাইন জিডি করার নিয়ম জানালেন ডিএমপির একটি থানার ওসি মোহাম্মদ মহসীন।
+            </p>
+            <div class="hero-link">
+                <li><a href="#">Learn More</a></li>
+            </div>
+
+        </div>
+
+        <div class="col-img">
+            <iframe class="img" width="100%" height="600"
+                src="https://www.youtube.com/embed/EI5eVTvSz8I?si=M2vYf39VOs-i0qwS" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="section-container hero-container-2">
+        <div class="col-img">
+            <iframe class="img" width="100%" height="600"
+                src="https://www.youtube.com/embed/ZopoTC1sbKE?si=hPoHRt-7ZgFnB-XU" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="col-contant">
+            <h2>কোন ধরণের আগুন কীভাবে নেভাবেন ,<br> আগুনে পুড়লে কী করবেন?</h2>
+            <p>শীতকালে বাংলাদেশে আগুন লাগার ঘটনার কথা বেশি শোনা যায়। বাসা-বাড়িতে আগুন বিভিন্ন কারণে লাগতে পারে। বিভিন্ন
+                ধরনের আগুনের ঝুঁকি কীভাবে কামনো যেতে পারে? আর আগুনে পুড়লে কী করবেন, কী করবেন না - জেনে নিন ভিডিও থেকে।
+            </p>
+            <div class="hero-link hero-link2">
+                <li><a href="#">Learn More</a></li>
+            </div>
+
+        </div>
+    </div>
+    <div class="section-container hero-container-1">
+
+        <div class="col-contant">
+            <h2>দুদকে কিভাবে অভিযোগ করবেন? দুদকে কাদের বিরুদ্ধে <br> অভিযোগ করা যায়</h2>
+            <p>দুর্নীতির মামলা কে, কখন, কোথায়, কিভাবে করবেন-এ মামলা করার নিয়মাবলী কি অর্থাৎ দুর্নীতি দমন আইন ও কমিশনে যা
+                কিছু বলা আছে-সেসকল বিষয়ে আইনী আলোচনা নিয়ে আমি---। দুর্নীতির দায়ে অভিযুক্ত ব্যক্তিদের বিচারের কাঠগড়ায়
+                দাঁড় করানোর দায়িত্ব দুর্নীতি দমন কমিশনের (দুদক) হাতে।২০০৪ সালের দুর্নীতি দমন কমিশন আইনের ৩(২) ধারায়
+                পরিষ্কার ভাষায় বলা হয়েছে যে দুর্নীতি দমন কমিশন হবে একটি স্বাধীন ও পক্ষপাতমুক্ত প্রতিষ্ঠান। কাজেই দুদক
+                যদি কোনো ব্যক্তির বিরুদ্ধে দুর্নীতির মামলা দায়ের করে এবং তা পরিচালনার কাজ এগিয়ে নিতে থাকে, তাহলে সেই
+                মামলা প্রত্যাহার করার কিংবা প্রত্যাহারের সুপারিশ করার কোনো এখতিয়ার সরকারের নেই। </p>
+            <div class="hero-link">
+                <li><a href="#">Learn More</a></li>
+            </div>
+
+        </div>
+
+        <div class="col-img">
+            <iframe class="img" width="100%" height="600"
+                src="https://www.youtube.com/embed/U3Lcif3Tdxw?si=Pt0Z3S-k4eW8UIRu" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </div>
+
+
+</div>
+<!-- hero section end here -->
+{% endblock %}
+
+
+{% comment %} -------------------------------------previous code------------------------------ {% endcomment %}
+
+{% comment %}
 {% extends 'navigation_bar.html' %}
 {% load static %}
 {% block style %}
@@ -13,22 +163,28 @@
 
         </div>
         <div class="col">
-            <a href="http://127.0.0.1:8000/emergency/"><div class="card card1">
-                <h5>Emergency Services</h5>
-            </div></a>
-            <a href="http://127.0.0.1:8000/report/"><div class="card card2">
-                <h5>Report Incident</h5>
-            </div></a>
-            <a href="http://127.0.0.1:8000/criminal/"> <div class="card card3">
-                <h5>Criminals</h5>
-            </div></a>
-           <a href="http://127.0.0.1:8000/location/"><div class="card card4">
-                <h5>Areas</h5>
-            </div></a>
-            
+            <a href="http://127.0.0.1:8000/emergency/">
+                <div class="card card1">
+                    <h5>Emergency Services</h5>
+                </div>
+            </a>
+            <a href="http://127.0.0.1:8000/report/">
+                <div class="card card2">
+                    <h5>Report Incident</h5>
+                </div>
+            </a>
+            <a href="http://127.0.0.1:8000/criminal/">
+                <div class="card card3">
+                    <h5>Criminals</h5>
+                </div>
+            </a>
+            <a href="http://127.0.0.1:8000/location/">
+                <div class="card card4">
+                    <h5>Areas</h5>
+                </div>
+            </a>
+
         </div>
     </div>
 </div>
-{% endblock %}
-
-
+{% endblock %} {% endcomment %}

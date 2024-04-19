@@ -1,90 +1,143 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'navStyle.css' %}">
 
     {% block style %}{% endblock %}
-    
+
     <script src="https://kit.fontawesome.com/2cf3d36764.js" crossorigin="anonymous"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
-    <div class="logo"></div>
-   <nav>
-    <div class="logo">
-       <img src="{% static 'logo.png'%}" width="250" height="70">
-        <ul>
-            <li><a href="http://127.0.0.1:8000/home/">Home</a></li>
-            <li><a href="http://127.0.0.1:8000/about/">About</a></li>
-            <li id="sendLocationBtn"><a href="">Send Help</a></li>
-            <li><a href="http://127.0.0.1:8000/contact/">Contact</a></li>
-            <li><a href="http://127.0.0.1:8000/notification/">Notifications</a></li>
-            <li><a href="http://127.0.0.1:8000/userprofile/">User Profile</a></li>
-            {% if not request.user.is_authenticated %}
-            <li><a href="http://127.0.0.1:8000/">Signin</a></li>
-            {% else %}
-            <li><a href="{% url 'myApp:logout' %}">Logout</a></li>
-            {% endif %}
-        </ul>
-    </div>
-   </nav>
-   {% include 'myApp/messages.html' %}
+
+    <nav>
+        <div class="logo">
+            <img src="{% static 'logo.png'%}" width="250" height="70">
+        </div>
+        <div class="nav-menu">
+            <ul>
+                <li><a href="http://127.0.0.1:8000/home/">Home</a></li>
+                <li><a href="http://127.0.0.1:8000/about/">About</a></li>
+                <li id="sendLocationBtn"><a href="">Send Help</a></li>
+                <li><a href="http://127.0.0.1:8000/contact/">Contact</a></li>
+                <li><a href="http://127.0.0.1:8000/notification/">Notifications</a></li>
+                <li><a href="http://127.0.0.1:8000/userprofile/">User Profile</a></li>
+                {% if not request.user.is_authenticated %}
+                <li><a href="http://127.0.0.1:8000/">Signin</a></li>
+                {% else %}
+                <li><a href="{% url 'myApp:logout' %}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% include 'myApp/messages.html' %}
     {% block content %}{% endblock %}
+
     <footer class="stickyFooter">
         <div class="footerContainer">
-            <div class="socialIcons">
-            <a href="https://www.facebook.com/UAPBDDhaka/"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.researchgate.net/institution/University-of-Asia-Pacific"><i class="fa-brands fa-researchgate"></i></a>
-            <a href="https://twitter.com/uapbd?lang=en"><i class="fa-brands fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/company/uapbd/"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://www.youtube.com/channel/UCs_tflvCGMhbWT5FqhXXfig"><i class="fa-brands fa-youtube"></i></a>
+            <div class="footerLeft">
+                <div class="logo">
+                    <img src="{% static 'logo.png'%}" class="img-fluid" width="250" height="70">
+                </div>
+                <div class="leftContent">
+                    <h4 class="sectionTitle">Emergency Services</h4>
+                    <p class="sectionDescription">We are committed to ensuring the safety and well-being of our
+                        community members through comprehensive emergency services:</p>
+                    <ul>
+                        <li><strong>Medical Assistance:</strong> Our trained medical professionals and paramedics
+                            provide immediate care and transportation to medical facilities.</li>
+                        <li><strong>Fire and Rescue:</strong> Our firefighters respond swiftly to fires and accidents,
+                            ensuring the safety of individuals and property.</li>
+                        <li><strong>Law Enforcement Support:</strong> We work with law enforcement agencies to maintain
+                            public order and safety.</li>
+                        <li><strong>Disaster Response:</strong> Our teams mobilize quickly to provide aid and support
+                            during natural disasters and emergencies.</li>
+                    </ul>
+                    <h4 class="sectionTitle">Report an Incident</h4>
+                    <p class="sectionDescription">Report incidents or emergencies through our user-friendly platform for
+                        prompt resolution.</p>
+                    <h4 class="sectionTitle">Criminal Alert</h4>
+                    <p class="sectionDescription">Stay informed about criminal activities in your area to create safer
+                        communities.</p>
+                    <!-- Add more sections for other services if needed -->
+                </div>
             </div>
-    </div>
-    <div class="footerBottom">
-        <p>Copywrite &copy;2022; Designed by <span class="designer">Tasnim</span></p>
-    </div>
+
+            <div class="footerRight">
+                <div class="contactInfo">
+                    <div class="socialIcons">
+                        <a href="https://www.facebook.com/UAPBDDhaka/"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="https://www.researchgate.net/institution/University-of-Asia-Pacific"><i
+                                class="fab fa-researchgate fa-lg"></i></a>
+                        <a href="https://twitter.com/uapbd?lang=en"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="https://www.linkedin.com/company/uapbd/"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="https://www.youtube.com/channel/UCs_tflvCGMhbWT5FqhXXfig"><i
+                                class="fab fa-youtube fa-lg"></i></a>
+                    </div>
+                    <p>Contact Us</p>
+                    <p>swiftalert@org.bd</p>
+                    <p>+880 9606003638</p>
+                    <p> 74/A Green Rd, Dhaka 1205</p>
+                    <p>Dhaka 1207, Bangladesh</p>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="footerBottom">
+            <p>&copy; 2022 Swift Alert. All rights reserved. Designed by <span class="designer">Swift Alert</span></p>
+        </div>
     </footer>
+
+
+
+
     <script>
-        setTimeout(function(){
+        setTimeout(function () {
             if ($('#msg').length > 0) {
                 $('[id^="msg-"]').remove();
             }
         }, 2000); // 2000 milliseconds (2 seconds)
     </script>
     <script>
-        document.getElementById('sendLocationBtn').addEventListener('click', function() {
+        document.getElementById('sendLocationBtn').addEventListener('click', function () {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(sendLocation, showError);
             } else {
                 alert('Geolocation is not supported by this browser.');
             }
         });
-    
+
         function sendLocation(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-    
+
             // Send the location to the server
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/send_location/', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    
+
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     alert(response.message);
                 }
             };
-    
+
             var data = 'latitude=' + latitude + '&longitude=' + longitude;
             xhr.send(data);
         }
-    
+
         function showError(error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
@@ -102,6 +155,7 @@
             }
         }
     </script>
-    
+
 </body>
+
 </html>
