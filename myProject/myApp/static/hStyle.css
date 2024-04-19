@@ -102,7 +102,7 @@ body {
     background-position: center;
  
 }
-.container {
+.home_container {
     width: 100%;
     background-image: url(hbg.png);
     min-height: 85vh;

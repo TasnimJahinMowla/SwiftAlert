@@ -3,18 +3,23 @@
     padding: 0px;
     box-sizing: border-box;
 }
+
 li{
     list-style: none;
 
 }
 nav {
-    background-color: #110d27;
+  height: auto;
+  background-color: #110d27;
+}
+.navigation{
+ 
     color: #fff;
     padding: 20px 0;
     width: 100%;
-  
+  padding: 0 7vw;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 }
 .nav-menu{
@@ -34,7 +39,6 @@ nav .logo img {
 
 nav ul {
     list-style: none;
-
     margin: 0;
     padding: 0;
     display: flex;
@@ -51,7 +55,7 @@ nav ul li:last-child {
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     transition: color 0.3s ease;
 }
 
