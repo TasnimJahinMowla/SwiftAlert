@@ -1,22 +1,31 @@
 {% extends 'navigation_bar.html' %}
 {% load static %}
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'emerStyle.css' %}">
 {% endblock %}
+
 {% block content %}
-<div class="hContainer">
+<div class="container hContainer"> 
     <div class="row">
-        <div class="col">
-            {% for service in emergency_services %}
+        {% for service in emergency_services %}
+        <div class="col-md-4 "> <!-- This ensures each service card will take up 4 columns -->
             <a href="{% url 'myApp:serviceprofile' service.id %}">
-                    <div class="card card{{ forloop.counter }}">
-                        <h5>{{ service.service_type }}</h5>
-                        <h4>{{ service.contact_information }}</h4>
-                        <h4>{{ service.availability }}</h4>
+                <div class="card card{{ forloop.counter }} ">
+                    <img src="{{ service.image.url }}" alt="{{ service.service_type }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.service_type }}</h5>
+                        <p class="card-text"><strong>Contact Information:</strong> {{ service.contact_information }}</p>
+                        <p class="card-text"><strong>Availability:</strong> {{ service.availability }}</p>
+                        
                     </div>
-                </a>
-            {% endfor %}
+                </div>
+            </a>
         </div>
+        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+        </div><div class="row"> 
+        {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
