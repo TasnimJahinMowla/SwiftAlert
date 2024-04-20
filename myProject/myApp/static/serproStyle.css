@@ -1,73 +1,87 @@
+/* Container */
 *{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-.serpro_container{
-    width: 100%;
-    height: 100vh;
-    background-image: url(hbg.png);
-    background-size: cover;
-    background-position: center;
+.serpro-container {
+    min-height: 80vh;
     display: flex;
+    justify-content: center;
+    background: #ece3e3;
+   
+    
+}
+
+/* Profile box */
+.profile-box {
+    max-width: 800px;
+    background-color: #fcfcfc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 10vw 0;
+}
+
+/* Profile content */
+.profile-content {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
 }
-.profile-box{
-    background: #ff574a;
-    text-align: center;
-    padding: 40px 90px;
-    color: #fff;
-    position: relative;
-    border-radius: 20px;
+
+/* Profile info */
+.profile-info {
+    flex: 1;
 }
-.profile-pic{
-    width: 150px;
-    border-radius: 50%;
-    background: #fff;
-    padding: 6px;
-    margin-top: 40px;
+
+/* Profile image */
+.profile-image {
+    flex: 1;
+    margin-left: 20px;
+    height: 200px;
 }
-.socialIcons{
-    display: flex;
-    justify-content: center;
+
+/* Profile picture */
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  border-radius:10px ;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius:10px ;
+  -moz-border-radius:10px ;
+  -ms-border-radius:10px ;
+  -o-border-radius:10px ;
 }
-.socialIcons a{
-    text-decoration: none;
-    padding: 5px;
-    background-color: transparent;
-    margin: 2px;
-    border-radius: 50%;
-}
-.socialIcons a i{
-    font-size: 1.5em;
+
+/* Contact button */
+button {
+    background-color: red;
     color: white;
-    opacity: 0.9;
-}
-.socialIcons a:hover{
-    background-color: gray;
-    transition: 0.5s;
-}
-.socialIcons a:hover i{
-    color: white;
-    transition: 0.5s;
-}
-.profile-box button{
-    background: #fff;
-    color: #ff574b;
     border: none;
-    outline: none;
-    box-shadow: 0 5px 10px rgba(244, 67, 54, 0.5);
-    padding: 15px 60px;
+    padding: 10px 20px;
     cursor: pointer;
-    border-radius: 30px;
-    margin-bottom: -50px;
-    font-weight: 600;
-    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
-.profile-box h3{
-    font-size: 22px;
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Social share */
+.social-share {
     margin-top: 20px;
-    font-weight: 500;
+}
+
+/* Social icons */
+.social-icons a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.social-icons a:hover {
+    color: #0056b3;
 }

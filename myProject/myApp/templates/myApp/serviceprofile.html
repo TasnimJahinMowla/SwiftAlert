@@ -4,20 +4,28 @@
 <link rel="stylesheet" href="{% static 'serproStyle.css' %}">
 {% endblock %}
 {% block content %}
-<div class="container serpro_container">
+<div class="container serpro-container">
     <div class="profile-box">
-        <img src="{{ service.image.url }}" class="profile-pic">
-        <h3>{{ service.service_type }}</h3>
-        <p>{{ service.description }}</p>
-        <div class="socialIcons">
-            <a href="https://www.facebook.com/UAPBDDhaka/"><i class="fa-brands fa-facebook"></i></a>
-            <a href="https://www.linkedin.com/company/uapbd/"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://www.youtube.com/channel/UCs_tflvCGMhbWT5FqhXXfig"><i class="fa-brands fa-youtube"></i></a>
+        <div class="profile-content">
+            <div class="profile-info">
+                <h2>{{ service.service_type }}</h2>
+                <p>{{ service.description }}</p>
+                <p><strong>Contact Information:</strong> {{ service.contact_information }}</p>
+                <p><strong>Availability:</strong> {{ service.availability }}</p>
+            </div>
+            <div class="profile-image">
+                <img src="{{ service.image.url }}" class="profile-pic">
+                <a href="mailto:{{ service.email }}"><button type="button">Contact Service</button></a>
+            </div>
         </div>
-        
-            <a href="mailto:{{ service.email }}"><button type="button">Send Email</button></a>
+        <div class="social-share">
+            <h3>Share:</h3>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/UAPBDDhaka/"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.linkedin.com/company/uapbd/"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/channel/UCs_tflvCGMhbWT5FqhXXfig"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
-
-
