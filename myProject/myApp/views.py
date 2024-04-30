@@ -364,7 +364,7 @@ def report(request):
         locations = Location.objects.all()
         for location in locations:
             update_location_crime_percentage(location) 
-        return render(request, "myApp/Home.html")
+        return render(request, "myApp/home.html")
 
     locations = Location.objects.all()
     crime_types = CrimeType.objects.all()
