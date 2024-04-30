@@ -5,6 +5,8 @@ from django.dispatch import receiver
 
 
 
+
+
 class Location(models.Model):
     area_code = models.CharField(max_length=10)
     area_name = models.CharField(max_length=100)

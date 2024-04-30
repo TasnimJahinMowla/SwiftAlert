@@ -31,7 +31,8 @@
                 <li><a href="http://127.0.0.1:8000/about/">About</a></li>
                 <li id="sendLocationBtn"><a href="">Send Help</a></li>
                 <li><a href="http://127.0.0.1:8000/contact/">Contact</a></li>
-                <li><a href="http://127.0.0.1:8000/notification/">Notifications</a></li>
+                <li><a href="http://127.0.0.1:8000/notification/">Notifications</a><span>({% if request.session.notifications_count %}{{ request.session.notifications_count }}{% else %}0{% endif %})</span></li>
+
                 <li><a href="http://127.0.0.1:8000/userprofile/">User Profile</a></li>
                 {% if not request.user.is_authenticated %}
                 <li><a href="http://127.0.0.1:8000/">Signin</a></li>

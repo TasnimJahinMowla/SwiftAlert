@@ -412,6 +412,14 @@ def get_location_details(latitude, longitude):
     return address
 
 
+def report(request):
+    # existing code for creating a report and notification...
+    user_profile = request.user.userprofile
+    notifications_count = user_profile.notifications.count()
+    request.session['notifications_count'] = notifications_count  # update session
+    return HttpResponse('Incident Report saved successfully')
+
+
 def send_email_with_location(location_details):
     sender_email = 'mahiyatasnim200021@gmail.com'  # Replace with your email
     sender_password = 'kxze ylnq rjtn vsdj'  # Replace with your App Password
