@@ -364,7 +364,7 @@ def report(request):
         locations = Location.objects.all()
         for location in locations:
             update_location_crime_percentage(location) 
-        return HttpResponse('Incident Report saved successfully')
+        return render(request, "myApp/Home.html")
 
     locations = Location.objects.all()
     crime_types = CrimeType.objects.all()
@@ -412,12 +412,34 @@ def get_location_details(latitude, longitude):
     return address
 
 
-def report(request):
-    # existing code for creating a report and notification...
-    user_profile = request.user.userprofile
-    notifications_count = user_profile.notifications.count()
-    request.session['notifications_count'] = notifications_count  # update session
-    return HttpResponse('Incident Report saved successfully')
+# def report(request):
+#     # existing code for creating a report and notification...
+#     user_profile = request.user.userprofile
+#     notifications_count = user_profile.notifications.count()
+#     request.session['notifications_count'] = notifications_count  # update session
+#     return HttpResponse('Incident Report saved successfully')
+
+
+@login_required
+def notification(request):
+    user = request.user
+    user_profile = user.userprofile
+
+    # Reset the session notification count
+    request.session['notifications_count'] = 0
+    request.session['reset_notifications'] = True
+    request.session.modified = True
+
+    notifications = user_profile.notifications.all().order_by('-timestamp')
+
+    # Optional: Mark notifications as read
+    for notification in notifications:
+        notification.is_read = True
+        notification.save()
+
+    context = {'notifications': notifications}
+    return render(request, "myApp/notification.html", context)
+
 
 
 def send_email_with_location(location_details):
