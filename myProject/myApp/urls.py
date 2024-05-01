@@ -24,6 +24,7 @@ urlpatterns = [
     path("", views.register, name="register"),
     path("location/", views.location, name="location"),
     path("criminal/", views.criminal, name="criminal"),
+    path("ml_results/", views.ml_results, name="ml_results"),
     path("criminal/<int:criminal_id>/", views.criminalprofile, name="criminalprofile"),
     path("userprofile/", views.userprofile, name="userprofile"),
     path("adminprofile/", views.adminprofile, name="adminprofile"),
