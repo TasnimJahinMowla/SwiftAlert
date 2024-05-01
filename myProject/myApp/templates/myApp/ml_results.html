@@ -1,0 +1,25 @@
+
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'ml_results.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Machine Learning Results</h1>
+<h2>Dataset Description</h2>
+<p>The "Bangladesh crime dataset from 2010 - 2019" is a comprehensive dataset that contains information on various types of crimes reported in different regions of Bangladesh over the past decade. The dataset includes 17 columns and 147 rows, with each row representing a particular region and year.</p>
+<h2>Training Results:</h2>
+<p>MAE: {{ mae_train }}</p>
+<p>MSE: {{ mse_train }}</p>
+<p>RMSE: {{ rmse_train }}</p>
+<p>R^2: {{ r2_train }}</p>
+
+<h2>Testing Results:</h2>
+<p>MAE: {{ mae_test }}</p>
+<p>MSE: {{ mse_test }}</p>
+<p>RMSE: {{ rmse_test }}</p>
+<p>R^2: {{ r2_test }}</p>
+
+<h2>Scatter Plot:</h2>
+<img src="data:image/png;base64,{{ graph }}" alt="Scatter Plot">
+{% endblock %}

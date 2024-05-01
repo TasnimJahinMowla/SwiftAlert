@@ -22,6 +22,14 @@ from django.apps import apps
 from django.forms import modelform_factory
 from .forms import get_dynamic_model_form
 from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import matplotlib.pyplot as plt
+import io
+import urllib, base64
 
 def register(request):
     if request.method == 'POST':
@@ -460,3 +468,77 @@ def send_email_with_location(location_details):
         server.login(sender_email, sender_password)
         text = message.as_string()
         server.sendmail(sender_email, receiver_email, text)
+
+
+def ml_results(request):
+    data = pd.read_csv('/workspaces/SwiftAlert/myProject/myApp/crime_data_bangladesh.csv')
+
+    data['overall_crime_rate'] = data.drop(['area_name', 'year'], axis=1).sum(axis=1)
+
+    X = data.drop(['area_name', 'year', 'overall_crime_rate'], axis=1)
+    y = data['overall_crime_rate']
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    rf_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
+    rf_regressor.fit(X_train, y_train)
+
+    y_train_pred = rf_regressor.predict(X_train)
+
+    mae_train = mean_absolute_error(y_train, y_train_pred)
+    mse_train = mean_squared_error(y_train, y_train_pred)
+    rmse_train = mean_squared_error(y_train, y_train_pred, squared=False)
+    r2_train = r2_score(y_train, y_train_pred)
+
+    y_test_pred = rf_regressor.predict(X_test)
+
+    mae_test = mean_absolute_error(y_test, y_test_pred)
+    mse_test = mean_squared_error(y_test, y_test_pred)
+    rmse_test = mean_squared_error(y_test, y_test_pred, squared=False)
+    r2_test = r2_score(y_test, y_test_pred)
+
+    # Creating plots
+    plt.figure(figsize=(12, 6))
+
+    # Training set scatter plot
+    plt.subplot(1, 2, 1)
+    plt.scatter(y_train, y_train_pred, color='blue', alpha=0.5, label='Actual vs. Predicted')
+    plt.plot([min(y_train), max(y_train)], [min(y_train), max(y_train)], color='red', linestyle='--', label='Perfect Prediction')
+    plt.xlabel('Actual Overall Crime Rate')
+    plt.ylabel('Predicted Overall Crime Rate')
+    plt.title('Training Set - Actual vs. Predicted')
+    plt.legend()
+
+    # Test set scatter plot
+    plt.subplot(1, 2, 2)
+    plt.scatter(y_test, y_test_pred, color='green', alpha=0.5, label='Actual vs. Predicted')
+    plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', linestyle='--', label='Perfect Prediction')
+    plt.xlabel('Actual Overall Crime Rate')
+    plt.ylabel('Predicted Overall Crime Rate')
+    plt.title('Test Set - Actual vs. Predicted')
+    plt.legend()
+
+    # Save the plot to a buffer
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+
+    # Convert the plot to base64 for HTML rendering
+    graph = base64.b64encode(image_png).decode('utf-8')
+
+    # Pass data to template
+    context = {
+        'mae_train': mae_train,
+        'mse_train': mse_train,
+        'rmse_train': rmse_train,
+        'r2_train': r2_train,
+        'mae_test': mae_test,
+        'mse_test': mse_test,
+        'rmse_test': rmse_test,
+        'r2_test': r2_test,
+        'graph': graph,
+    }
+
+    return render(request, 'myApp/ml_results.html', context)
