@@ -1,0 +1,31 @@
+
+{% extends 'navigation_bar.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'areaStyle.css' %}">
+{% endblock %}
+{% block content %}
+<div class="hContainer">
+    <div class="row">
+        <div class="col">
+            <h1>SwiftAlert</h1>
+            <h5>Empower, Report, Alert</h5>
+        </div>
+        <div class="col">
+            <a href="http://127.0.0.1:8000/crime_analysis/">
+                <div class="card">
+                    <img src="{% static 'ml_loc.jpg' %}" alt="Criminals">
+                    <h5>Machine Learning Results</h5>
+                </div>
+            </a>
+            <a href="http://127.0.0.1:8000/location/">
+                <div class="card">
+                    <img src="{% static 'stat_loc.jpeg' %}" alt="Criminals">
+                    <h5>Static Results</h5>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

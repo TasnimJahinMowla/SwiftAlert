@@ -201,6 +201,11 @@ def home(request):
     return render(request, "myApp/home.html")
 
 @login_required
+def areas(request):
+    context={}
+    return render(request, "myApp/areas.html")
+
+@login_required
 @user_passes_test(lambda u: u.is_staff, login_url='home')  # Redirect to 'home' if not an admin
 def admin_panel(request):
     models = apps.get_app_config('myApp').get_models()
@@ -542,3 +547,43 @@ def ml_results(request):
     }
 
     return render(request, 'myApp/ml_results.html', context)
+
+def crime_analysis(request):
+    data = pd.read_csv('/workspaces/SwiftAlert/myProject/myApp/crime_data_bangladesh.csv')
+
+    # Initialize lists to store results for all areas
+    area_results = []
+
+    for area_name, area_data in data.groupby('area_name'):
+        area_result = {}
+
+        area_data['overall_crime_rate'] = area_data.drop(['area_name', 'year'], axis=1).sum(axis=1)
+
+        X = area_data.drop(['area_name', 'year', 'overall_crime_rate'], axis=1)
+        y = area_data['overall_crime_rate']
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+        rf_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
+        rf_regressor.fit(X_train, y_train)
+
+        y_test_pred = rf_regressor.predict(X_test)
+
+        rmse_test = mean_squared_error(y_test, y_test_pred, squared=False)
+
+        # Determine safety status based on test RMSE
+        safety_status = 'Safe' if rmse_test < 2000 else 'Unsafe'
+
+        # Populate area result dictionary
+        area_result['area_name'] = area_name
+        area_result['test_rmse'] = rmse_test
+        area_result['safety_status'] = safety_status
+
+        # Append area result to list
+        area_results.append(area_result)
+
+    context = {
+        'area_results': area_results,
+    }
+
+    return render(request, 'myApp/crime_analysis.html', context)
